@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
+import { cn } from "@/lib/utils"
 
 const FOCUS_AREAS = [
   { value: "food", label: "Food Distribution" },
@@ -32,21 +33,47 @@ export default function VolunteerPage() {
     focusArea: "general",
     message: "",
   })
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    if (errors[e.target.name]) {
+      setErrors((prev) => ({ ...prev, [e.target.name]: "" }))
+    }
   }
 
   const handleSelectArea = (value: string) => {
     setFormData((prev) => ({ ...prev, focusArea: value }))
+    if (errors.focusArea) {
+      setErrors((prev) => ({ ...prev, focusArea: "" }))
+    }
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    const newErrors: Record<string, string> = {}
 
-    if (!formData.name || !formData.email || !formData.phone || !formData.focusArea) {
-      toast.error("Required Fields Missing", {
-        description: "Please fill in all required fields.",
+    if (!formData.name.trim()) {
+      newErrors.name = "Full name is required."
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = "Email address is required."
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address."
+    }
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required."
+    } else if (!/^\+?[0-9]{10,14}$/.test(formData.phone.replace(/\s+/g, ""))) {
+      newErrors.phone = "Please enter a valid phone number (10-14 digits)."
+    }
+    if (!formData.focusArea) {
+      newErrors.focusArea = "Please select an area of interest."
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      toast.error("Validation Error", {
+        description: "Please check the highlighted fields.",
       })
       return
     }
@@ -206,8 +233,14 @@ export default function VolunteerPage() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Enter your name"
-                    className="h-11 rounded-xl border border-border/60 bg-background focus:border-primary/40 focus:ring-primary/40"
+                    className={cn(
+                      "h-11 rounded-xl border bg-background focus:border-primary/40 focus:ring-primary/40",
+                      errors.name ? "border-destructive focus:border-destructive focus:ring-destructive" : "border-border/60"
+                    )}
                   />
+                  {errors.name && (
+                    <span className="text-[11px] text-destructive font-medium">{errors.name}</span>
+                  )}
                 </div>
 
                 {/* Email Address */}
@@ -223,8 +256,14 @@ export default function VolunteerPage() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Enter your email"
-                    className="h-11 rounded-xl border border-border/60 bg-background focus:border-primary/40 focus:ring-primary/40"
+                    className={cn(
+                      "h-11 rounded-xl border bg-background focus:border-primary/40 focus:ring-primary/40",
+                      errors.email ? "border-destructive focus:border-destructive focus:ring-destructive" : "border-border/60"
+                    )}
                   />
+                  {errors.email && (
+                    <span className="text-[11px] text-destructive font-medium">{errors.email}</span>
+                  )}
                 </div>
               </div>
 
@@ -241,8 +280,14 @@ export default function VolunteerPage() {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="Enter your phone number (e.g. +91 98765 43210)"
-                  className="h-11 rounded-xl border border-border/60 bg-background focus:border-primary/40 focus:ring-primary/40"
+                  className={cn(
+                    "h-11 rounded-xl border bg-background focus:border-primary/40 focus:ring-primary/40",
+                    errors.phone ? "border-destructive focus:border-destructive focus:ring-destructive" : "border-border/60"
+                  )}
                 />
+                {errors.phone && (
+                  <span className="text-[11px] text-destructive font-medium">{errors.phone}</span>
+                )}
               </div>
 
               {/* Focus Area selector */}
@@ -257,22 +302,33 @@ export default function VolunteerPage() {
                       <div
                         key={area.value}
                         onClick={() => handleSelectArea(area.value)}
-                        className={`flex items-center justify-between border rounded-xl p-3.5 cursor-pointer transition-all duration-200 ${
+                        className={cn(
+                          "flex items-center justify-between border rounded-xl p-3.5 cursor-pointer transition-all duration-200",
                           isSelected
                             ? "border-primary/40 bg-primary/[0.04] text-primary"
+                            : errors.focusArea
+                            ? "border-destructive bg-destructive/[0.02]"
                             : "border-border/50 bg-background hover:bg-muted/15"
-                        }`}
+                        )}
                       >
                         <span className="text-xs font-semibold">{area.label}</span>
-                        <div className={`size-4 rounded-full border flex items-center justify-center transition-all ${
-                          isSelected ? "border-primary bg-primary text-primary-foreground" : "border-border"
-                        }`}>
+                        <div className={cn(
+                          "size-4 rounded-full border flex items-center justify-center transition-all",
+                          isSelected
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : errors.focusArea
+                            ? "border-destructive"
+                            : "border-border"
+                        )}>
                           {isSelected && <HugeiconsIcon icon={CheckIcon} className="size-2.5 stroke-[3]" />}
                         </div>
                       </div>
                     )
                   })}
                 </div>
+                {errors.focusArea && (
+                  <span className="text-[11px] text-destructive font-medium">{errors.focusArea}</span>
+                )}
               </div>
 
               {/* Cover Message */}

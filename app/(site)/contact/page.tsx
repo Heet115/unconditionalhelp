@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
+import { cn } from "@/lib/utils"
 
 export default function ContactPage() {
   const [isPending, startTransition] = useTransition()
@@ -26,17 +27,38 @@ export default function ContactPage() {
     phone: "",
     message: "",
   })
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    if (errors[e.target.name]) {
+      setErrors((prev) => ({ ...prev, [e.target.name]: "" }))
+    }
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    const newErrors: Record<string, string> = {}
 
-    if (!formData.name || !formData.email || !formData.message) {
-      toast.error("Required Fields Missing", {
-        description: "Please fill in all required fields.",
+    if (!formData.name.trim()) {
+      newErrors.name = "Full name is required."
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = "Email address is required."
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address."
+    }
+    if (formData.phone && !/^\+?[0-9]{10,14}$/.test(formData.phone.replace(/\s+/g, ""))) {
+      newErrors.phone = "Please enter a valid phone number (10-14 digits)."
+    }
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required."
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      toast.error("Validation Error", {
+        description: "Please check the highlighted fields.",
       })
       return
     }
@@ -220,8 +242,6 @@ export default function ContactPage() {
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-5">
-
-
               {/* Full Name */}
               <div className="flex flex-col gap-1.5">
                 <Label
@@ -238,8 +258,14 @@ export default function ContactPage() {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Enter your name"
-                  className="h-11 rounded-xl border border-border/60 bg-background focus:border-primary/40 focus:ring-primary/40"
+                  className={cn(
+                    "h-11 rounded-xl border bg-background focus:border-primary/40 focus:ring-primary/40",
+                    errors.name ? "border-destructive focus:border-destructive focus:ring-destructive" : "border-border/60"
+                  )}
                 />
+                {errors.name && (
+                  <span className="text-[11px] text-destructive font-medium">{errors.name}</span>
+                )}
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2">
@@ -259,8 +285,14 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Enter your email"
-                    className="h-11 rounded-xl border border-border/60 bg-background focus:border-primary/40 focus:ring-primary/40"
+                    className={cn(
+                      "h-11 rounded-xl border bg-background focus:border-primary/40 focus:ring-primary/40",
+                      errors.email ? "border-destructive focus:border-destructive focus:ring-destructive" : "border-border/60"
+                    )}
                   />
+                  {errors.email && (
+                    <span className="text-[11px] text-destructive font-medium">{errors.email}</span>
+                  )}
                 </div>
 
                 {/* Phone Number */}
@@ -278,8 +310,14 @@ export default function ContactPage() {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="e.g. +91 98765 43210"
-                    className="h-11 rounded-xl border border-border/60 bg-background focus:border-primary/40 focus:ring-primary/40"
+                    className={cn(
+                      "h-11 rounded-xl border bg-background focus:border-primary/40 focus:ring-primary/40",
+                      errors.phone ? "border-destructive focus:border-destructive focus:ring-destructive" : "border-border/60"
+                    )}
                   />
+                  {errors.phone && (
+                    <span className="text-[11px] text-destructive font-medium">{errors.phone}</span>
+                  )}
                 </div>
               </div>
 
@@ -299,8 +337,14 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="Type your message here..."
-                  className="resize-none rounded-xl border border-border/60 bg-background focus:border-primary/40 focus:ring-primary/40"
+                  className={cn(
+                    "resize-none rounded-xl border bg-background focus:border-primary/40 focus:ring-primary/40",
+                    errors.message ? "border-destructive focus:border-destructive focus:ring-destructive" : "border-border/60"
+                  )}
                 />
+                {errors.message && (
+                  <span className="text-[11px] text-destructive font-medium">{errors.message}</span>
+                )}
               </div>
 
               {/* Submit */}
