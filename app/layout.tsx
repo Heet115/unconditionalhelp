@@ -1,11 +1,9 @@
 import type { Metadata } from "next"
 import { DM_Sans, DM_Serif_Display } from "next/font/google"
+import { Analytics } from "@vercel/analytics/react"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { WhatsAppButton } from "@/components/whatsapp-button"
 import { TRUST } from "@/lib/constants"
 
 const dmSans = DM_Sans({
@@ -99,16 +97,8 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased">
         <ThemeProvider>
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
-          >
-            Skip to main content
-          </a>
-          <Navbar />
-          <main id="main-content">{children}</main>
-          <Footer />
-          <WhatsAppButton />
+          {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
