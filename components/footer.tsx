@@ -95,15 +95,32 @@ export function Footer() {
               Navigate
             </p>
             <div className="flex flex-col gap-2.5">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {NAV_LINKS.map((link) => {
+                if ("items" in link) {
+                  return (
+                    <div key={link.label} className="flex flex-col gap-2.5">
+                      {link.items.map((subItem) => (
+                        <Link
+                          key={subItem.href}
+                          href={subItem.href}
+                          className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                        >
+                          {subItem.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )
+                }
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    {link.label}
+                  </Link>
+                )
+              })}
             </div>
           </div>
 

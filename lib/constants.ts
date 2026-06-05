@@ -18,9 +18,15 @@ export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Activities", href: "/activities" },
-  { label: "Events", href: "/events" },
-  { label: "Gallery", href: "/gallery" },
+  {
+    label: "Our Work",
+    items: [
+      { label: "Activities", href: "/activities" },
+      { label: "Events", href: "/events" },
+      { label: "Impact", href: "/impact" },
+      { label: "Gallery", href: "/gallery" },
+    ],
+  },
   { label: "Donate", href: "/donate" },
   { label: "Volunteer", href: "/volunteer" },
   { label: "Contact", href: "/contact" },

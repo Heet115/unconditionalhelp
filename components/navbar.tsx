@@ -12,6 +12,12 @@ import {
 import { NAV_LINKS } from "@/lib/constants"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -59,6 +65,43 @@ export function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden items-center gap-0.5 rounded-full bg-muted/60 px-1.5 py-1 lg:flex">
             {NAV_LINKS.filter((l) => l.label !== "Donate").map((link) => {
+              if ("items" in link) {
+                const isActiveGroup = link.items.some(sub => pathname.startsWith(sub.href))
+                return (
+                  <DropdownMenu key={link.label}>
+                    <DropdownMenuTrigger asChild>
+                      <button className={cn(
+                        "rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-all duration-200 inline-flex items-center gap-1.5 [&[data-state=open]>svg]:rotate-180 outline-none",
+                        isActiveGroup 
+                          ? "bg-background text-primary shadow-sm font-semibold"
+                          : "text-muted-foreground hover:bg-background/40 hover:text-foreground"
+                      )}>
+                        {link.label}
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-60 transition-transform duration-300"><path d="m6 9 6 6 6-6"/></svg>
+                      </button>
+                    </DropdownMenuTrigger>
+                    
+                    <DropdownMenuContent align="center" className="w-48 rounded-2xl bg-background/95 backdrop-blur-xl border border-border/60 shadow-xl p-2 flex flex-col gap-1 z-50">
+                      {link.items.map((subItem) => {
+                        const active = pathname.startsWith(subItem.href)
+                        return (
+                          <DropdownMenuItem asChild key={subItem.href} className="cursor-pointer rounded-xl px-3 py-2 text-[13px] font-medium transition-all duration-200 w-full focus:bg-accent focus:text-accent-foreground outline-none">
+                            <Link 
+                              href={subItem.href} 
+                              className={cn(
+                                active ? "bg-primary/10 text-primary font-semibold" : "text-muted-foreground hover:text-foreground"
+                              )}
+                            >
+                              {subItem.label}
+                            </Link>
+                          </DropdownMenuItem>
+                        )
+                      })}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )
+              }
+
               const active = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)
               return (
                 <Link
@@ -108,12 +151,40 @@ export function Navbar() {
           className={cn(
             "mt-2 overflow-hidden rounded-2xl border border-border/60 bg-background/95 shadow-lg backdrop-blur-2xl transition-all duration-300 lg:hidden",
             mobileOpen
-              ? "max-h-[500px] opacity-100"
+              ? "max-h-[700px] opacity-100"
               : "max-h-0 border-transparent opacity-0"
           )}
         >
           <div className="flex flex-col gap-0.5 p-3">
             {NAV_LINKS.map((link) => {
+              if ("items" in link) {
+                return (
+                  <div key={link.label} className="flex flex-col gap-0.5">
+                    <div className="px-4 py-2 mt-1 text-[11px] font-bold tracking-[0.2em] text-muted-foreground/60 uppercase">
+                      {link.label}
+                    </div>
+                    {link.items.map((subItem) => {
+                      const active = pathname.startsWith(subItem.href)
+                      return (
+                        <Link
+                          key={subItem.href}
+                          href={subItem.href}
+                          onClick={() => setMobileOpen(false)}
+                          className={cn(
+                            "rounded-xl px-4 py-3 text-sm font-medium transition-colors duration-150 ml-2 border-l-2",
+                            active
+                              ? "bg-primary/5 text-primary border-primary font-semibold"
+                              : "text-foreground hover:bg-accent border-transparent"
+                          )}
+                        >
+                          {subItem.label}
+                        </Link>
+                      )
+                    })}
+                  </div>
+                )
+              }
+
               const active = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)
               return (
                 <Link
