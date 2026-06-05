@@ -22,7 +22,7 @@ const dmSerif = DM_Serif_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://unconditionalhelp.org"
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://unconditionalhelp.vercel.app"
   ),
   title: {
     default: `${TRUST.name} — ${TRUST.tagline}`,
