@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { usePathname } from "next/navigation"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
   FavouriteIcon,
@@ -15,6 +16,7 @@ import { cn } from "@/lib/utils"
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
@@ -56,15 +58,23 @@ export function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden items-center gap-0.5 rounded-full bg-muted/60 px-1.5 py-1 lg:flex">
-            {NAV_LINKS.filter((l) => l.label !== "Donate").map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="rounded-full px-3.5 py-1.5 text-[13px] font-medium text-muted-foreground transition-all hover:bg-background hover:text-foreground hover:shadow-sm"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.filter((l) => l.label !== "Donate").map((link) => {
+              const active = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-all duration-200",
+                    active
+                      ? "bg-background text-primary shadow-sm font-semibold"
+                      : "text-muted-foreground hover:bg-background/40 hover:text-foreground"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
           </div>
 
           {/* Right */}
@@ -103,16 +113,24 @@ export function Navbar() {
           )}
         >
           <div className="flex flex-col gap-0.5 p-3">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="rounded-xl px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const active = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={cn(
+                    "rounded-xl px-4 py-3 text-sm font-medium transition-colors duration-150",
+                    active
+                      ? "bg-primary/10 text-primary font-semibold"
+                      : "text-foreground hover:bg-accent"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
             <div className="mt-2 border-t border-border pt-3">
               <Button asChild size="lg" className="w-full rounded-xl">
                 <Link href="/donate" onClick={() => setMobileOpen(false)}>
