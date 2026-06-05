@@ -16,6 +16,8 @@ import { submitContactForm } from "@/app/actions"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 
@@ -100,10 +102,10 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+            <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
               <HugeiconsIcon icon={FavouriteIcon} className="size-3.5" />
               Get In Touch
-            </span>
+            </Badge>
             <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl">
               Contact{"  "}
               <span className="relative inline-block text-primary">
@@ -241,7 +243,7 @@ export default function ContactPage() {
               soon as possible.
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+            <form onSubmit={handleSubmit} suppressHydrationWarning className="mt-6 space-y-5">
               {/* Full Name */}
               <div className="flex flex-col gap-1.5">
                 <Label
@@ -348,13 +350,14 @@ export default function ContactPage() {
               </div>
 
               {/* Submit */}
-              <button
+              <Button
                 type="submit"
                 disabled={isPending}
-                className="h-12 w-full cursor-pointer rounded-full bg-primary font-semibold text-primary-foreground shadow-md shadow-primary/20 transition-all duration-200 hover:bg-primary/95 hover:shadow-lg focus:outline-none disabled:opacity-50"
+                size="lg"
+                className="h-12 w-full rounded-full shadow-md shadow-primary/20"
               >
                 {isPending ? "Sending Message..." : "Send Message"}
-              </button>
+              </Button>
             </form>
           </motion.div>
         </div>

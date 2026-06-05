@@ -1,6 +1,7 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { DM_Sans, DM_Serif_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/react"
+import Script from "next/script"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -20,10 +21,35 @@ const dmSerif = DM_Serif_Display({
   display: "swap",
 })
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://unconditionalhelp.vercel.app"
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+  width: "device-width",
+  initialScale: 1,
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://unconditionalhelp.vercel.app"
-  ),
+  metadataBase: new URL(siteUrl),
+  applicationName: TRUST.name,
+  category: "Nonprofit",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   title: {
     default: `${TRUST.name} — ${TRUST.tagline}`,
     template: `%s | ${TRUST.name}`,
@@ -47,14 +73,14 @@ export const metadata: Metadata = {
     title: `${TRUST.name} — ${TRUST.tagline}`,
     description: TRUST.description,
     images: [
-      { url: "/hero-bg.png", width: 1200, height: 630, alt: TRUST.name },
+      { url: `${siteUrl}/hero-bg.png`, width: 1200, height: 630, alt: TRUST.name },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${TRUST.name} — ${TRUST.tagline}`,
     description: TRUST.description,
-    images: ["/hero-bg.png"],
+    images: [`${siteUrl}/hero-bg.png`],
   },
 }
 
@@ -67,10 +93,12 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
       className={`${dmSans.variable} ${dmSerif.variable}`}
     >
       <head>
-        <script
+        <Script
+          id="schema-org"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -97,10 +125,20 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
-        <ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           {children}
-          <Analytics />
-          <Toaster position="top-right" closeButton richColors duration={3000} />
+          {process.env.NODE_ENV === "production" && <Analytics />}
+          <Toaster
+            position="top-right"
+            closeButton
+            richColors
+            duration={3000}
+          />
         </ThemeProvider>
       </body>
     </html>

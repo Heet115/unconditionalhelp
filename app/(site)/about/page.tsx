@@ -13,6 +13,9 @@ import {
   CharityIcon,
 } from "@hugeicons/core-free-icons"
 import { TRUST } from "@/lib/constants"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 
 const VALUES = [
   {
@@ -117,10 +120,10 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+            <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
               <HugeiconsIcon icon={FavouriteIcon} className="size-3.5" />
               Our Story
-            </span>
+            </Badge>
             <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl">
               Serving with{" "}
               <span className="relative inline-block text-primary">
@@ -283,10 +286,10 @@ export default function AboutPage() {
         {/* Transparency Section */}
         <div className="mt-28 rounded-3xl border border-border/60 bg-muted/10 p-8 md:p-12">
           <div className="text-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+            <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
               <HugeiconsIcon icon={ClipboardCheckIcon} className="size-3.5" />
               100% Financial Accountability
-            </span>
+            </Badge>
             <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Our Transparency Pledge
             </h2>
@@ -297,35 +300,41 @@ export default function AboutPage() {
 
           {/* Core Pillars */}
           <div className="mt-12 grid gap-8 md:grid-cols-3">
-            <div className="rounded-2xl border border-border/50 bg-background p-6 shadow-sm">
-              <div className="inline-flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
-                <HugeiconsIcon icon={CharityIcon} className="size-5" />
-              </div>
-              <h3 className="mt-4 text-lg font-bold text-foreground">0% Admin Fee Cut</h3>
-              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                All administrative and logistics costs are funded out-of-pocket by the founder and trustees. Every rupee you donate goes 100% directly to ground campaigns.
-              </p>
-            </div>
+            <Card className="rounded-2xl border-border/50 shadow-sm">
+              <CardContent className="p-6">
+                <div className="inline-flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
+                  <HugeiconsIcon icon={CharityIcon} className="size-5" />
+                </div>
+                <h3 className="mt-4 text-lg font-bold text-foreground">0% Admin Fee Cut</h3>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                  All administrative and logistics costs are funded out-of-pocket by the founder and trustees. Every rupee you donate goes 100% directly to ground campaigns.
+                </p>
+              </CardContent>
+            </Card>
 
-            <div className="rounded-2xl border border-border/50 bg-background p-6 shadow-sm">
-              <div className="inline-flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
-                <HugeiconsIcon icon={ClipboardCheckIcon} className="size-5" />
-              </div>
-              <h3 className="mt-4 text-lg font-bold text-foreground">Open Ledger Policy</h3>
-              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                Complete invoices, purchase bills, and distribution accounts are documented. Any donor can request a detailed statement of their donation utilization at any time.
-              </p>
-            </div>
+            <Card className="rounded-2xl border-border/50 shadow-sm">
+              <CardContent className="p-6">
+                <div className="inline-flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
+                  <HugeiconsIcon icon={ClipboardCheckIcon} className="size-5" />
+                </div>
+                <h3 className="mt-4 text-lg font-bold text-foreground">Open Ledger Policy</h3>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                  Complete invoices, purchase bills, and distribution accounts are documented. Any donor can request a detailed statement of their donation utilization at any time.
+                </p>
+              </CardContent>
+            </Card>
 
-            <div className="rounded-2xl border border-border/50 bg-background p-6 shadow-sm">
-              <div className="inline-flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
-                <HugeiconsIcon icon={UserGroup03Icon} className="size-5" />
-              </div>
-              <h3 className="mt-4 text-lg font-bold text-foreground">Daily Proof of Work</h3>
-              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                We document our distributions daily with photos and video updates on our WhatsApp status and social channels, offering real-time visibility into active campaigns.
-              </p>
-            </div>
+            <Card className="rounded-2xl border-border/50 shadow-sm">
+              <CardContent className="p-6">
+                <div className="inline-flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
+                  <HugeiconsIcon icon={UserGroup03Icon} className="size-5" />
+                </div>
+                <h3 className="mt-4 text-lg font-bold text-foreground">Daily Proof of Work</h3>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                  We document our distributions daily with photos and video updates on our WhatsApp status and social channels, offering real-time visibility into active campaigns.
+                </p>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Allocation Breakdown Progress Bars */}
@@ -458,12 +467,11 @@ export default function AboutPage() {
                 UH Bhavnagar runs entirely on the spirit of volunteers. From students to local citizens, our community steps out every single day to serve meals, plant hope, and help those in need.
               </p>
             </div>
-            <Link
-              href="/volunteer"
-              className="inline-flex h-11 items-center justify-center rounded-full bg-primary px-6 text-xs font-semibold text-primary-foreground shadow-md shadow-primary/10 transition-all duration-200 hover:bg-primary/95 hover:shadow-lg"
-            >
-              Join the Movement
-            </Link>
+            <Button asChild size="lg" className="rounded-full shadow-md shadow-primary/10">
+              <Link href="/volunteer">
+                Join the Movement
+              </Link>
+            </Button>
           </motion.div>
         </div>
       </div>

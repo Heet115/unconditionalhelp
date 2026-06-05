@@ -13,11 +13,13 @@ import { NAV_LINKS } from "@/lib/constants"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -45,8 +47,10 @@ export function Navbar() {
           scrolled && "top-3 right-3 left-3"
         )}
       >
-        <nav className="relative flex h-12 items-center justify-between overflow-hidden rounded-full border border-border/60 bg-background/80 px-2 shadow-lg shadow-black/[0.03] backdrop-blur-2xl sm:h-14 sm:px-3">
-          <div className="pointer-events-none absolute -top-4 -right-4 size-20 rounded-full bg-primary/[0.06]" />
+        <nav className="relative flex h-12 items-center justify-between rounded-full border border-border/60 bg-background/80 px-2 shadow-lg shadow-black/[0.03] backdrop-blur-2xl sm:h-14 sm:px-3">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
+            <div className="absolute size-20 rounded-full bg-primary/[0.06]" />
+          </div>
 
           {/* Logo */}
           <Link
@@ -63,62 +67,77 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden items-center gap-0.5 rounded-full bg-muted/60 px-1.5 py-1 lg:flex">
-            {NAV_LINKS.filter((l) => l.label !== "Donate").map((link) => {
-              if ("items" in link) {
-                const isActiveGroup = link.items.some(sub => pathname.startsWith(sub.href))
-                return (
-                  <DropdownMenu key={link.label}>
-                    <DropdownMenuTrigger asChild>
-                      <button className={cn(
-                        "rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-all duration-200 inline-flex items-center gap-1.5 [&[data-state=open]>svg]:rotate-180 outline-none",
-                        isActiveGroup 
-                          ? "bg-background text-primary shadow-sm font-semibold"
-                          : "text-muted-foreground hover:bg-background/40 hover:text-foreground"
-                      )}>
+          <NavigationMenu className="hidden lg:flex" viewport={false}>
+            <NavigationMenuList className="flex items-center gap-0.5 rounded-full bg-muted/60 px-1.5 py-1">
+              {NAV_LINKS.filter((l) => l.label !== "Donate").map((link) => {
+                if ("items" in link) {
+                  const isActiveGroup = link.items.some((sub) =>
+                    pathname.startsWith(sub.href)
+                  )
+                  return (
+                    <NavigationMenuItem key={link.label}>
+                      <NavigationMenuTrigger
+                        className={cn(
+                          "h-auto rounded-full bg-transparent px-3.5 py-1.5 text-[13px] font-medium transition-all duration-200 hover:bg-background/40 hover:text-foreground data-[state=open]:bg-background/40",
+                          isActiveGroup
+                            ? "bg-background font-semibold text-primary shadow-sm"
+                            : "text-muted-foreground"
+                        )}
+                      >
                         {link.label}
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-60 transition-transform duration-300"><path d="m6 9 6 6 6-6"/></svg>
-                      </button>
-                    </DropdownMenuTrigger>
-                    
-                    <DropdownMenuContent align="center" className="w-48 rounded-2xl bg-background/95 backdrop-blur-xl border border-border/60 shadow-xl p-2 flex flex-col gap-1 z-50">
-                      {link.items.map((subItem) => {
-                        const active = pathname.startsWith(subItem.href)
-                        return (
-                          <DropdownMenuItem asChild key={subItem.href} className="cursor-pointer rounded-xl px-3 py-2 text-[13px] font-medium transition-all duration-200 w-full focus:bg-accent focus:text-accent-foreground outline-none">
-                            <Link 
-                              href={subItem.href} 
-                              className={cn(
-                                active ? "bg-primary/10 text-primary font-semibold" : "text-muted-foreground hover:text-foreground"
-                              )}
-                            >
-                              {subItem.label}
-                            </Link>
-                          </DropdownMenuItem>
-                        )
-                      })}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                )
-              }
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent className="flex min-w-42 flex-col gap-1 rounded-2xl border border-border/60 bg-background/95 p-2 shadow-xl backdrop-blur-xl group-data-[viewport=false]/navigation-menu:bg-background/95">
+                        <ul className="flex flex-col gap-1 w-full">
+                          {link.items.map((subItem) => {
+                            const active = pathname.startsWith(subItem.href)
+                            return (
+                              <li key={subItem.href}>
+                                <NavigationMenuLink asChild>
+                                  <Link
+                                    href={subItem.href}
+                                    className={cn(
+                                      "block w-full cursor-pointer rounded-xl px-3 py-2 text-[13px] font-medium transition-all duration-200 outline-none hover:bg-accent hover:text-accent-foreground",
+                                      active
+                                        ? "bg-primary/10 font-semibold text-primary"
+                                        : "text-muted-foreground hover:text-foreground"
+                                    )}
+                                  >
+                                    {subItem.label}
+                                  </Link>
+                                </NavigationMenuLink>
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  )
+                }
 
-              const active = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-all duration-200",
-                    active
-                      ? "bg-background text-primary shadow-sm font-semibold"
-                      : "text-muted-foreground hover:bg-background/40 hover:text-foreground"
-                  )}
-                >
-                  {link.label}
-                </Link>
-              )
-            })}
-          </div>
+                const active =
+                  link.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(link.href)
+                return (
+                  <NavigationMenuItem key={link.href}>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href={link.href}
+                        className={cn(
+                          "block rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-all duration-200",
+                          active
+                            ? "bg-background font-semibold text-primary shadow-sm"
+                            : "text-muted-foreground hover:bg-background/40 hover:text-foreground"
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                )
+              })}
+            </NavigationMenuList>
+          </NavigationMenu>
 
           {/* Right */}
           <div className="flex items-center gap-2">
@@ -160,7 +179,7 @@ export function Navbar() {
               if ("items" in link) {
                 return (
                   <div key={link.label} className="flex flex-col gap-0.5">
-                    <div className="px-4 py-2 mt-1 text-[11px] font-bold tracking-[0.2em] text-muted-foreground/60 uppercase">
+                    <div className="mt-1 px-4 py-2 text-[11px] font-bold tracking-[0.2em] text-muted-foreground/60 uppercase">
                       {link.label}
                     </div>
                     {link.items.map((subItem) => {
@@ -171,10 +190,10 @@ export function Navbar() {
                           href={subItem.href}
                           onClick={() => setMobileOpen(false)}
                           className={cn(
-                            "rounded-xl px-4 py-3 text-sm font-medium transition-colors duration-150 ml-2 border-l-2",
+                            "ml-2 rounded-xl border-l-2 px-4 py-3 text-sm font-medium transition-colors duration-150",
                             active
-                              ? "bg-primary/5 text-primary border-primary font-semibold"
-                              : "text-foreground hover:bg-accent border-transparent"
+                              ? "border-primary bg-primary/5 font-semibold text-primary"
+                              : "border-transparent text-foreground hover:bg-accent"
                           )}
                         >
                           {subItem.label}
@@ -185,7 +204,10 @@ export function Navbar() {
                 )
               }
 
-              const active = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)
+              const active =
+                link.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(link.href)
               return (
                 <Link
                   key={link.href}
@@ -194,7 +216,7 @@ export function Navbar() {
                   className={cn(
                     "rounded-xl px-4 py-3 text-sm font-medium transition-colors duration-150",
                     active
-                      ? "bg-primary/10 text-primary font-semibold"
+                      ? "bg-primary/10 font-semibold text-primary"
                       : "text-foreground hover:bg-accent"
                   )}
                 >

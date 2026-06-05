@@ -22,7 +22,7 @@ export const NAV_LINKS = [
     label: "Our Work",
     items: [
       { label: "Activities", href: "/activities" },
-      { label: "Events", href: "/events" },
+      { label: "Upcoming Events", href: "/events" },
       { label: "Impact", href: "/impact" },
       { label: "Gallery", href: "/gallery" },
     ],

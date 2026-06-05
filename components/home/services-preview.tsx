@@ -15,6 +15,7 @@ import {
 } from "@hugeicons/core-free-icons"
 import { useInView } from "@/hooks/use-in-view"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { SERVICES } from "@/lib/constants"
 
@@ -186,13 +187,12 @@ export function ServicesPreview() {
           transition={{ duration: 0.5, delay: 0.7 }}
           className="mt-10 text-center"
         >
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-background px-6 py-2.5 text-sm font-medium text-foreground shadow-sm transition-all hover:border-primary/30 hover:text-primary"
-          >
-            View all services
-            <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
-          </Link>
+          <Button asChild variant="outline" className="rounded-full">
+            <Link href="/services">
+              View all services
+              <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
+            </Link>
+          </Button>
         </motion.div>
       </div>
     </section>

@@ -16,6 +16,7 @@ import {
 import { SERVICES } from "@/lib/constants"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
 
 const SERVICE_ICONS: Record<string, typeof ServingFoodIcon> = {
   food: ServingFoodIcon,
@@ -111,10 +112,10 @@ export default function ServicesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+            <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
               <HugeiconsIcon icon={Plant03Icon} className="size-3.5" />
               What We Do
-            </span>
+            </Badge>
             <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl">
               Our Area of{" "}
               <span className="relative inline-block text-primary">
@@ -176,7 +177,7 @@ export default function ServicesPage() {
                   {service.description}
                 </p>
 
-                <hr className="my-5 border-border/60" />
+                <Separator className="my-5" />
 
                 {/* Sub activities */}
                 <ul className="space-y-2.5 flex-1">

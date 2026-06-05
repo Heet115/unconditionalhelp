@@ -14,6 +14,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Badge } from "@/components/ui/badge"
 
 const BANK_DETAILS = [
   { label: "Account Name", value: "Unconditional Help Charitable Trust" },
@@ -71,10 +72,10 @@ export default function DonatePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+            <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
               <HugeiconsIcon icon={CharityIcon} className="size-3.5" />
               Empower Kindness
-            </span>
+            </Badge>
             <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl">
               Support Our{"  "}
               <span className="relative inline-block text-primary">

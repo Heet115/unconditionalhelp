@@ -6,6 +6,7 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { ArrowRight01Icon, FavouriteIcon } from "@hugeicons/core-free-icons"
 import { useInView } from "@/hooks/use-in-view"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { TRUST } from "@/lib/constants"
 
@@ -169,13 +170,12 @@ export function AboutPreview() {
               ))}
             </div>
 
-            <Link
-              href="/about"
-              className="mt-auto inline-flex items-center gap-1.5 rounded-full bg-accent px-5 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent/80"
-            >
-              Read our full story
-              <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
-            </Link>
+            <Button asChild variant="secondary" className="mt-auto rounded-full">
+              <Link href="/about">
+                Read our full story
+                <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
+              </Link>
+            </Button>
           </motion.div>
         </div>
       </div>

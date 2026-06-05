@@ -3,6 +3,8 @@ import Image from "next/image"
 import { Calendar01Icon, Location01Icon, Time02Icon, Notification01Icon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { getUpcomingEvents } from "@/lib/data/events"
+import { Badge } from "@/components/ui/badge"
+import { FadeIn } from "@/components/fade-in"
 
 export const metadata: Metadata = {
   title: "Upcoming Events",
@@ -25,11 +27,11 @@ export default async function EventsPage() {
 
       <div className="container relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+        <FadeIn className="text-center mb-16">
+          <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
             <HugeiconsIcon icon={Notification01Icon} className="size-3.5" />
             Get Involved
-          </span>
+          </Badge>
           <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl">
             Upcoming{" "}
             <span className="relative inline-block text-primary">
@@ -52,10 +54,10 @@ export default async function EventsPage() {
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground leading-relaxed">
             Join our mission on the ground. Browse our schedule for upcoming community programs, health camps, and volunteer drives.
           </p>
-        </div>
+        </FadeIn>
 
         {/* Events List */}
-        <div className="mx-auto max-w-5xl">
+        <FadeIn delay={0.2} className="mx-auto max-w-5xl">
           {events.length === 0 ? (
             <div className="text-center py-24 bg-muted/30 rounded-[2rem] border border-border/50 shadow-inner">
               <div className="mx-auto size-16 bg-background rounded-full flex items-center justify-center border border-border/50 mb-4 shadow-sm text-muted-foreground">
@@ -126,7 +128,7 @@ export default async function EventsPage() {
               })}
             </div>
           )}
-        </div>
+        </FadeIn>
       </div>
     </div>
   )

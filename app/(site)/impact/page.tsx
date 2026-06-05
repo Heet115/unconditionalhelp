@@ -8,6 +8,8 @@ import {
 } from "@hugeicons/core-free-icons"
 import { getImpactStories } from "@/lib/data/impact"
 import { BeforeAfterSlider } from "@/components/before-after-slider"
+import { Badge } from "@/components/ui/badge"
+import { FadeIn } from "@/components/fade-in"
 
 export const metadata: Metadata = {
   title: "Our Impact & Success Stories",
@@ -31,11 +33,11 @@ export default async function ImpactPage() {
 
       <div className="relative container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
-        <div className="mb-16 text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+        <FadeIn className="mb-16 text-center">
+          <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
             <HugeiconsIcon icon={FavouriteIcon} className="size-3.5" />
             Creating Change
-          </span>
+          </Badge>
           <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl">
             Our{" "}
             <span className="relative inline-block text-primary">
@@ -60,10 +62,10 @@ export default async function ImpactPage() {
             Slide across the images to see the undeniable difference we&apos;ve
             made together.
           </p>
-        </div>
+        </FadeIn>
 
         {/* Stories List */}
-        <div className="mx-auto max-w-5xl space-y-24">
+        <FadeIn delay={0.2} className="mx-auto max-w-5xl space-y-24">
           {stories.length === 0 ? (
             <div className="rounded-[2rem] border border-border/50 bg-muted/30 py-24 text-center shadow-inner">
               <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full border border-border/50 bg-background text-muted-foreground shadow-sm">
@@ -161,7 +163,7 @@ export default async function ImpactPage() {
               </article>
             ))
           )}
-        </div>
+        </FadeIn>
       </div>
     </div>
   )
