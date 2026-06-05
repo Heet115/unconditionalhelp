@@ -12,6 +12,7 @@ import { submitVolunteerForm } from "@/app/actions"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { toast } from "sonner"
 
 const FOCUS_AREAS = [
   { value: "food", label: "Food Distribution" },
@@ -31,10 +32,6 @@ export default function VolunteerPage() {
     focusArea: "general",
     message: "",
   })
-  const [formStatus, setFormStatus] = useState<{
-    type: "success" | "error" | null
-    message: string
-  }>({ type: null, message: "" })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -46,17 +43,20 @@ export default function VolunteerPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setFormStatus({ type: null, message: "" })
 
     if (!formData.name || !formData.email || !formData.phone || !formData.focusArea) {
-      setFormStatus({ type: "error", message: "Please fill in all required fields." })
+      toast.error("Required Fields Missing", {
+        description: "Please fill in all required fields.",
+      })
       return
     }
 
     startTransition(async () => {
       const result = await submitVolunteerForm(formData)
       if (result.success) {
-        setFormStatus({ type: "success", message: result.message || "" })
+        toast.success("Application Submitted!", {
+          description: result.message || "Thank you for volunteering! We will contact you soon.",
+        })
         setFormData({
           name: "",
           email: "",
@@ -65,7 +65,9 @@ export default function VolunteerPage() {
           message: "",
         })
       } else {
-        setFormStatus({ type: "error", message: result.error || "Submission failed." })
+        toast.error("Submission Failed", {
+          description: result.error || "Something went wrong. Please try again later.",
+        })
       }
     })
   }
@@ -190,19 +192,6 @@ export default function VolunteerPage() {
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-5">
-              {/* Form Status Banner */}
-              {formStatus.type && (
-                <div
-                  className={`rounded-2xl border p-4 text-xs font-semibold leading-relaxed ${
-                    formStatus.type === "success"
-                      ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                      : "border-rose-500/20 bg-rose-500/10 text-rose-600 dark:text-rose-400"
-                  }`}
-                >
-                  {formStatus.message}
-                </div>
-              )}
-
               <div className="grid gap-5 sm:grid-cols-2">
                 {/* Full Name */}
                 <div className="flex flex-col gap-1.5">

@@ -1,7 +1,6 @@
 "use server"
 
-import fs from "fs/promises"
-import path from "path"
+import { supabase } from "@/lib/supabase"
 
 export interface ContactInput {
   name: string
@@ -18,22 +17,6 @@ export interface VolunteerInput {
   message?: string
 }
 
-const DATA_DIR = path.join(process.cwd(), "data")
-const SUBMISSIONS_FILE = path.join(DATA_DIR, "submissions.json")
-
-async function ensureSubmissionsFile() {
-  try {
-    await fs.mkdir(DATA_DIR, { recursive: true })
-    try {
-      await fs.access(SUBMISSIONS_FILE)
-    } catch {
-      await fs.writeFile(SUBMISSIONS_FILE, JSON.stringify({ contact: [], volunteer: [] }, null, 2))
-    }
-  } catch (error) {
-    console.error("Failed to initialize submissions file:", error)
-  }
-}
-
 export async function submitContactForm(data: ContactInput) {
   // Simple validation
   if (!data.name || !data.email || !data.message) {
@@ -41,18 +24,20 @@ export async function submitContactForm(data: ContactInput) {
   }
 
   try {
-    await ensureSubmissionsFile()
-    const fileContent = await fs.readFile(SUBMISSIONS_FILE, "utf-8")
-    const db = JSON.parse(fileContent)
+    const { error } = await supabase
+      .from("contact_submissions")
+      .insert([
+        {
+          name: data.name,
+          email: data.email,
+          phone: data.phone || null,
+          message: data.message,
+        },
+      ])
 
-    const newSubmission = {
-      id: crypto.randomUUID(),
-      timestamp: new Date().toISOString(),
-      ...data,
+    if (error) {
+      throw error
     }
-
-    db.contact.push(newSubmission)
-    await fs.writeFile(SUBMISSIONS_FILE, JSON.stringify(db, null, 2))
 
     return { success: true, message: "Thank you! Your message has been sent successfully." }
   } catch (error) {
@@ -68,18 +53,21 @@ export async function submitVolunteerForm(data: VolunteerInput) {
   }
 
   try {
-    await ensureSubmissionsFile()
-    const fileContent = await fs.readFile(SUBMISSIONS_FILE, "utf-8")
-    const db = JSON.parse(fileContent)
+    const { error } = await supabase
+      .from("volunteer_applications")
+      .insert([
+        {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          focus_area: data.focusArea,
+          message: data.message || null,
+        },
+      ])
 
-    const newSubmission = {
-      id: crypto.randomUUID(),
-      timestamp: new Date().toISOString(),
-      ...data,
+    if (error) {
+      throw error
     }
-
-    db.volunteer.push(newSubmission)
-    await fs.writeFile(SUBMISSIONS_FILE, JSON.stringify(db, null, 2))
 
     return { success: true, message: "Thank you for volunteering! We will contact you soon." }
   } catch (error) {

@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/sonner"
 import { TRUST } from "@/lib/constants"
 
 const dmSans = DM_Sans({
@@ -99,6 +100,7 @@ export default function RootLayout({
         <ThemeProvider>
           {children}
           <Analytics />
+          <Toaster position="top-right" closeButton richColors duration={3000} />
         </ThemeProvider>
       </body>
     </html>

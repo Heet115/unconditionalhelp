@@ -16,6 +16,7 @@ import { submitContactForm } from "@/app/actions"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { toast } from "sonner"
 
 export default function ContactPage() {
   const [isPending, startTransition] = useTransition()
@@ -25,10 +26,6 @@ export default function ContactPage() {
     phone: "",
     message: "",
   })
-  const [formStatus, setFormStatus] = useState<{
-    type: "success" | "error" | null
-    message: string
-  }>({ type: null, message: "" })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -36,17 +33,20 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setFormStatus({ type: null, message: "" })
 
     if (!formData.name || !formData.email || !formData.message) {
-      setFormStatus({ type: "error", message: "Please fill in all required fields." })
+      toast.error("Required Fields Missing", {
+        description: "Please fill in all required fields.",
+      })
       return
     }
 
     startTransition(async () => {
       const result = await submitContactForm(formData)
       if (result.success) {
-        setFormStatus({ type: "success", message: result.message || "" })
+        toast.success("Message Sent!", {
+          description: result.message || "Thank you! Your message has been sent successfully.",
+        })
         setFormData({
           name: "",
           email: "",
@@ -54,7 +54,9 @@ export default function ContactPage() {
           message: "",
         })
       } else {
-        setFormStatus({ type: "error", message: result.error || "Submission failed." })
+        toast.error("Sending Failed", {
+          description: result.error || "Something went wrong. Please try again later.",
+        })
       }
     })
   }
@@ -218,17 +220,7 @@ export default function ContactPage() {
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-5">
-              {formStatus.type && (
-                <div
-                  className={`rounded-2xl border p-4 text-xs leading-relaxed font-semibold ${
-                    formStatus.type === "success"
-                      ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                      : "border-rose-500/20 bg-rose-500/10 text-rose-600 dark:text-rose-400"
-                  }`}
-                >
-                  {formStatus.message}
-                </div>
-              )}
+
 
               {/* Full Name */}
               <div className="flex flex-col gap-1.5">
