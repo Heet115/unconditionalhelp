@@ -31,7 +31,9 @@ export default function ContactPage() {
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     if (errors[e.target.name]) {
       setErrors((prev) => ({ ...prev, [e.target.name]: "" }))
@@ -50,7 +52,10 @@ export default function ContactPage() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address."
     }
-    if (formData.phone && !/^\+?[0-9]{10,14}$/.test(formData.phone.replace(/\s+/g, ""))) {
+    if (
+      formData.phone &&
+      !/^\+?[0-9]{10,14}$/.test(formData.phone.replace(/\s+/g, ""))
+    ) {
       newErrors.phone = "Please enter a valid phone number (10-14 digits)."
     }
     if (!formData.message.trim()) {
@@ -69,7 +74,9 @@ export default function ContactPage() {
       const result = await submitContactForm(formData)
       if (result.success) {
         toast.success("Message Sent!", {
-          description: result.message || "Thank you! Your message has been sent successfully.",
+          description:
+            result.message ||
+            "Thank you! Your message has been sent successfully.",
         })
         setFormData({
           name: "",
@@ -79,7 +86,8 @@ export default function ContactPage() {
         })
       } else {
         toast.error("Sending Failed", {
-          description: result.error || "Something went wrong. Please try again later.",
+          description:
+            result.error || "Something went wrong. Please try again later.",
         })
       }
     })
@@ -88,11 +96,11 @@ export default function ContactPage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background pt-24 pb-20">
       {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_-20%,#000_70%,transparent_100%)] bg-[size:14px_24px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] mask-[radial-gradient(ellipse_80%_50%_at_50%_-20%,#000_70%,transparent_100%)] bg-size-[14px_24px]" />
 
       {/* Decorative Orbs */}
-      <div className="absolute top-40 -left-20 size-[320px] rounded-full bg-primary/[0.03] blur-3xl" />
-      <div className="absolute top-[600px] -right-20 size-[400px] rounded-full bg-primary/[0.02] blur-3xl" />
+      <div className="absolute top-40 -left-20 size-[320px] rounded-full bg-primary/3 blur-3xl" />
+      <div className="absolute top-[600px] -right-20 size-[400px] rounded-full bg-primary/2 blur-3xl" />
 
       <div className="relative container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -102,7 +110,10 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
+            <Badge
+              variant="outline"
+              className="gap-1.5 rounded-full border-0 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"
+            >
               <HugeiconsIcon icon={FavouriteIcon} className="size-3.5" />
               Get In Touch
             </Badge>
@@ -210,7 +221,7 @@ export default function ContactPage() {
 
             {/* Custom styled map placeholder */}
             <div className="relative flex h-48 flex-col items-center justify-center overflow-hidden rounded-3xl border border-border/60 bg-muted/20 p-4 text-center">
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/[0.03] via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-tr from-primary/3 via-transparent to-transparent" />
               <div className="mb-2 rounded-2xl border border-border/60 bg-background p-3 text-primary shadow-sm">
                 <HugeiconsIcon
                   icon={MapsLocationIcon}
@@ -243,7 +254,11 @@ export default function ContactPage() {
               soon as possible.
             </p>
 
-            <form onSubmit={handleSubmit} suppressHydrationWarning className="mt-6 space-y-5">
+            <form
+              onSubmit={handleSubmit}
+              suppressHydrationWarning
+              className="mt-6 space-y-5"
+            >
               {/* Full Name */}
               <div className="flex flex-col gap-1.5">
                 <Label
@@ -262,11 +277,15 @@ export default function ContactPage() {
                   placeholder="Enter your name"
                   className={cn(
                     "h-11 rounded-xl border bg-background focus:border-primary/40 focus:ring-primary/40",
-                    errors.name ? "border-destructive focus:border-destructive focus:ring-destructive" : "border-border/60"
+                    errors.name
+                      ? "border-destructive focus:border-destructive focus:ring-destructive"
+                      : "border-border/60"
                   )}
                 />
                 {errors.name && (
-                  <span className="text-[11px] text-destructive font-medium">{errors.name}</span>
+                  <span className="text-[11px] font-medium text-destructive">
+                    {errors.name}
+                  </span>
                 )}
               </div>
 
@@ -289,11 +308,15 @@ export default function ContactPage() {
                     placeholder="Enter your email"
                     className={cn(
                       "h-11 rounded-xl border bg-background focus:border-primary/40 focus:ring-primary/40",
-                      errors.email ? "border-destructive focus:border-destructive focus:ring-destructive" : "border-border/60"
+                      errors.email
+                        ? "border-destructive focus:border-destructive focus:ring-destructive"
+                        : "border-border/60"
                     )}
                   />
                   {errors.email && (
-                    <span className="text-[11px] text-destructive font-medium">{errors.email}</span>
+                    <span className="text-[11px] font-medium text-destructive">
+                      {errors.email}
+                    </span>
                   )}
                 </div>
 
@@ -314,11 +337,15 @@ export default function ContactPage() {
                     placeholder="e.g. +91 98765 43210"
                     className={cn(
                       "h-11 rounded-xl border bg-background focus:border-primary/40 focus:ring-primary/40",
-                      errors.phone ? "border-destructive focus:border-destructive focus:ring-destructive" : "border-border/60"
+                      errors.phone
+                        ? "border-destructive focus:border-destructive focus:ring-destructive"
+                        : "border-border/60"
                     )}
                   />
                   {errors.phone && (
-                    <span className="text-[11px] text-destructive font-medium">{errors.phone}</span>
+                    <span className="text-[11px] font-medium text-destructive">
+                      {errors.phone}
+                    </span>
                   )}
                 </div>
               </div>
@@ -341,11 +368,15 @@ export default function ContactPage() {
                   placeholder="Type your message here..."
                   className={cn(
                     "resize-none rounded-xl border bg-background focus:border-primary/40 focus:ring-primary/40",
-                    errors.message ? "border-destructive focus:border-destructive focus:ring-destructive" : "border-border/60"
+                    errors.message
+                      ? "border-destructive focus:border-destructive focus:ring-destructive"
+                      : "border-border/60"
                   )}
                 />
                 {errors.message && (
-                  <span className="text-[11px] text-destructive font-medium">{errors.message}</span>
+                  <span className="text-[11px] font-medium text-destructive">
+                    {errors.message}
+                  </span>
                 )}
               </div>
 

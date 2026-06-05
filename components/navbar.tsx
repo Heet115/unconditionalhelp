@@ -4,11 +4,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import { HugeiconsIcon } from "@hugeicons/react"
-import {
-  FavouriteIcon,
-  Menu01Icon,
-  Cancel01Icon,
-} from "@hugeicons/core-free-icons"
+import { FavouriteIcon, Menu01Icon } from "@hugeicons/core-free-icons"
 import { NAV_LINKS } from "@/lib/constants"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -20,6 +16,14 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -47,9 +51,9 @@ export function Navbar() {
           scrolled && "top-3 right-3 left-3"
         )}
       >
-        <nav className="relative flex h-12 items-center justify-between rounded-full border border-border/60 bg-background/80 px-2 shadow-lg shadow-black/[0.03] backdrop-blur-2xl sm:h-14 sm:px-3">
+        <nav className="relative flex h-12 items-center justify-between rounded-full border border-border/60 bg-background/80 px-2 shadow-lg shadow-black/3 backdrop-blur-2xl sm:h-14 sm:px-3">
           <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
-            <div className="absolute size-20 rounded-full bg-primary/[0.06]" />
+            <div className="absolute size-20 rounded-full bg-primary/6" />
           </div>
 
           {/* Logo */}
@@ -87,7 +91,7 @@ export function Navbar() {
                         {link.label}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent className="flex min-w-42 flex-col gap-1 rounded-2xl border border-border/60 bg-background/95 p-2 shadow-xl backdrop-blur-xl group-data-[viewport=false]/navigation-menu:bg-background/95">
-                        <ul className="flex flex-col gap-1 w-full">
+                        <ul className="flex w-full flex-col gap-1">
                           {link.items.map((subItem) => {
                             const active = pathname.startsWith(subItem.href)
                             return (
@@ -149,90 +153,97 @@ export function Navbar() {
               <Link href="/donate">Donate</Link>
             </Button>
 
-            <button
-              id="mobile-menu-toggle"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="flex size-9 items-center justify-center rounded-full transition-colors hover:bg-accent lg:hidden"
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
-              aria-expanded={mobileOpen}
-            >
-              <HugeiconsIcon
-                icon={mobileOpen ? Cancel01Icon : Menu01Icon}
-                size={18}
-                color="currentColor"
-              />
-            </button>
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+              <SheetTrigger asChild>
+                <button
+                  id="mobile-menu-toggle"
+                  className="flex size-9 items-center justify-center rounded-full transition-colors hover:bg-accent lg:hidden"
+                  aria-label="Open menu"
+                >
+                  <HugeiconsIcon
+                    icon={Menu01Icon}
+                    size={18}
+                    color="currentColor"
+                  />
+                </button>
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                className="w-[300px] border-l border-border/60 bg-background/95 p-6 pt-16 backdrop-blur-2xl sm:w-[400px]"
+              >
+                <SheetHeader className="sr-only">
+                  <SheetTitle>Navigation Menu</SheetTitle>
+                  <SheetDescription>Mobile navigation links</SheetDescription>
+                </SheetHeader>
+                <div className="flex flex-col gap-2">
+                  {NAV_LINKS.map((link) => {
+                    if ("items" in link) {
+                      return (
+                        <div
+                          key={link.label}
+                          className="mb-2 flex flex-col gap-1"
+                        >
+                          <div className="px-4 py-2 text-[11px] font-bold tracking-[0.2em] text-muted-foreground/60 uppercase">
+                            {link.label}
+                          </div>
+                          {link.items.map((subItem) => {
+                            const active = pathname.startsWith(subItem.href)
+                            return (
+                              <Link
+                                key={subItem.href}
+                                href={subItem.href}
+                                onClick={() => setMobileOpen(false)}
+                                className={cn(
+                                  "ml-2 rounded-xl border-l-2 px-4 py-3 text-sm font-medium transition-colors duration-150",
+                                  active
+                                    ? "border-primary bg-primary/5 font-semibold text-primary"
+                                    : "border-transparent text-foreground hover:bg-accent"
+                                )}
+                              >
+                                {subItem.label}
+                              </Link>
+                            )
+                          })}
+                        </div>
+                      )
+                    }
+
+                    const active =
+                      link.href === "/"
+                        ? pathname === "/"
+                        : pathname.startsWith(link.href)
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setMobileOpen(false)}
+                        className={cn(
+                          "rounded-xl px-4 py-3 text-sm font-medium transition-colors duration-150",
+                          active
+                            ? "bg-primary/10 font-semibold text-primary"
+                            : "text-foreground hover:bg-accent"
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    )
+                  })}
+                  <div className="mt-4 border-t border-border pt-4">
+                    <Button
+                      asChild
+                      size="lg"
+                      className="w-full rounded-xl shadow-md shadow-primary/20"
+                    >
+                      <Link href="/donate" onClick={() => setMobileOpen(false)}>
+                        Donate Now
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </nav>
-
-        {/* Mobile dropdown */}
-        <div
-          className={cn(
-            "mt-2 overflow-hidden rounded-2xl border border-border/60 bg-background/95 shadow-lg backdrop-blur-2xl transition-all duration-300 lg:hidden",
-            mobileOpen
-              ? "max-h-[700px] opacity-100"
-              : "max-h-0 border-transparent opacity-0"
-          )}
-        >
-          <div className="flex flex-col gap-0.5 p-3">
-            {NAV_LINKS.map((link) => {
-              if ("items" in link) {
-                return (
-                  <div key={link.label} className="flex flex-col gap-0.5">
-                    <div className="mt-1 px-4 py-2 text-[11px] font-bold tracking-[0.2em] text-muted-foreground/60 uppercase">
-                      {link.label}
-                    </div>
-                    {link.items.map((subItem) => {
-                      const active = pathname.startsWith(subItem.href)
-                      return (
-                        <Link
-                          key={subItem.href}
-                          href={subItem.href}
-                          onClick={() => setMobileOpen(false)}
-                          className={cn(
-                            "ml-2 rounded-xl border-l-2 px-4 py-3 text-sm font-medium transition-colors duration-150",
-                            active
-                              ? "border-primary bg-primary/5 font-semibold text-primary"
-                              : "border-transparent text-foreground hover:bg-accent"
-                          )}
-                        >
-                          {subItem.label}
-                        </Link>
-                      )
-                    })}
-                  </div>
-                )
-              }
-
-              const active =
-                link.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(link.href)
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={cn(
-                    "rounded-xl px-4 py-3 text-sm font-medium transition-colors duration-150",
-                    active
-                      ? "bg-primary/10 font-semibold text-primary"
-                      : "text-foreground hover:bg-accent"
-                  )}
-                >
-                  {link.label}
-                </Link>
-              )
-            })}
-            <div className="mt-2 border-t border-border pt-3">
-              <Button asChild size="lg" className="w-full rounded-xl">
-                <Link href="/donate" onClick={() => setMobileOpen(false)}>
-                  Donate Now
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
       </header>
     </>
   )

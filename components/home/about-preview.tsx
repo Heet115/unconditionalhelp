@@ -26,8 +26,8 @@ export function AboutPreview() {
       ref={ref}
       className="relative overflow-hidden bg-muted/40 py-20 md:py-28"
     >
-      <div className="absolute -top-20 -left-20 size-[300px] rounded-full bg-primary/[0.05]" />
-      <div className="absolute -right-16 bottom-0 size-[200px] rounded-full bg-primary/[0.04]" />
+      <div className="absolute -top-20 -left-20 size-[300px] rounded-full bg-primary/5" />
+      <div className="absolute -right-16 bottom-0 size-[200px] rounded-full bg-primary/4" />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.25]"
         style={{
@@ -83,7 +83,7 @@ export function AboutPreview() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="relative flex flex-col rounded-3xl bg-primary text-primary-foreground sm:min-h-[420px]"
           >
-            <div className="absolute top-6 right-8 font-heading text-[8rem] leading-none text-primary-foreground/[0.06] select-none">
+            <div className="absolute top-6 right-8 font-heading text-[8rem] leading-none text-primary-foreground/6 select-none">
               &ldquo;
             </div>
 
@@ -170,7 +170,11 @@ export function AboutPreview() {
               ))}
             </div>
 
-            <Button asChild variant="secondary" className="mt-auto rounded-full">
+            <Button
+              asChild
+              variant="secondary"
+              className="mt-auto rounded-full"
+            >
               <Link href="/about">
                 Read our full story
                 <HugeiconsIcon icon={ArrowRight01Icon} size={14} />

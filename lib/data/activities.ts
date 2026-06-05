@@ -29,7 +29,9 @@ export async function getActivities(): Promise<Activity[]> {
   return data as Activity[]
 }
 
-export async function getActivityBySlug(slug: string): Promise<Activity | null> {
+export async function getActivityBySlug(
+  slug: string
+): Promise<Activity | null> {
   const { data, error } = await supabase
     .from("activities")
     .select("*")

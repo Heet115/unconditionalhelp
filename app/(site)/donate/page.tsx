@@ -28,19 +28,23 @@ const BANK_DETAILS = [
 const FAQS = [
   {
     question: "How will my donation be used?",
-    answer: "Every single rupee goes directly into purchasing raw grains, cooking supplies for food drives, tree guards and saplings for plantation drives, bird clay water pots, blankets for winter drives, or medical rescues for stray animals. We do not use donation funds for administrative salaries.",
+    answer:
+      "Every single rupee goes directly into purchasing raw grains, cooking supplies for food drives, tree guards and saplings for plantation drives, bird clay water pots, blankets for winter drives, or medical rescues for stray animals. We do not use donation funds for administrative salaries.",
   },
   {
     question: "Can I donate physical materials (food grains, clothes)?",
-    answer: "Yes, absolutely! We warmly accept raw materials like rice, wheat flour, lentils, cooking oil, as well as clean, wearable clothes and blankets. Please use our Contact page or WhatsApp us to schedule a drop-off.",
+    answer:
+      "Yes, absolutely! We warmly accept raw materials like rice, wheat flour, lentils, cooking oil, as well as clean, wearable clothes and blankets. Please use our Contact page or WhatsApp us to schedule a drop-off.",
   },
   {
     question: "Will I receive a receipt for my donation?",
-    answer: "Yes. Once you make a bank transfer or UPI payment, please send a screenshot of the transaction along with your name and address to our WhatsApp or email. We will generate and share a formal receipt.",
+    answer:
+      "Yes. Once you make a bank transfer or UPI payment, please send a screenshot of the transaction along with your name and address to our WhatsApp or email. We will generate and share a formal receipt.",
   },
   {
     question: "Is there any minimum donation amount?",
-    answer: "No, kindness has no minimum. Every contribution, even enough to feed a single stray animal or provide a hot meal to one person (approx. ₹30), makes a meaningful difference.",
+    answer:
+      "No, kindness has no minimum. Every contribution, even enough to feed a single stray animal or provide a hot meal to one person (approx. ₹30), makes a meaningful difference.",
   },
 ]
 
@@ -58,13 +62,13 @@ export default function DonatePage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background pt-24 pb-20">
       {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_-20%,#000_70%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] mask-[radial-gradient(ellipse_80%_50%_at_50%_-20%,#000_70%,transparent_100%)] bg-size-[14px_24px]" />
 
       {/* Decorative Orbs */}
-      <div className="absolute top-40 -left-20 size-[320px] rounded-full bg-primary/[0.03] blur-3xl" />
-      <div className="absolute top-[800px] -right-20 size-[420px] rounded-full bg-primary/[0.02] blur-3xl" />
+      <div className="absolute top-40 -left-20 size-[320px] rounded-full bg-primary/3 blur-3xl" />
+      <div className="absolute top-[800px] -right-20 size-[420px] rounded-full bg-primary/2 blur-3xl" />
 
-      <div className="container relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center">
           <motion.div
@@ -72,7 +76,10 @@ export default function DonatePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
+            <Badge
+              variant="outline"
+              className="gap-1.5 rounded-full border-0 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"
+            >
               <HugeiconsIcon icon={CharityIcon} className="size-3.5" />
               Empower Kindness
             </Badge>
@@ -95,8 +102,9 @@ export default function DonatePage() {
                 </svg>
               </span>
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground leading-relaxed">
-              Your contribution fuels our daily drives. Choose standard bank transfers or scan below to send donations directly and securely.
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              Your contribution fuels our daily drives. Choose standard bank
+              transfers or scan below to send donations directly and securely.
             </p>
           </motion.div>
         </div>
@@ -109,11 +117,14 @@ export default function DonatePage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="md:col-span-7 rounded-3xl border border-border/60 bg-muted/10 p-6 sm:p-8"
+            className="rounded-3xl border border-border/60 bg-muted/10 p-6 sm:p-8 md:col-span-7"
           >
-            <h2 className="text-xl font-bold text-foreground">Direct Bank Transfer</h2>
-            <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">
-              Use standard NEFT / IMPS / RTGS payment channels. Click any item below to copy details directly to your clipboard.
+            <h2 className="text-xl font-bold text-foreground">
+              Direct Bank Transfer
+            </h2>
+            <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+              Use standard NEFT / IMPS / RTGS payment channels. Click any item
+              below to copy details directly to your clipboard.
             </p>
 
             <div className="mt-6 space-y-4">
@@ -121,23 +132,23 @@ export default function DonatePage() {
                 <div
                   key={detail.label}
                   onClick={() => handleCopy(detail.value, idx)}
-                  className="group relative flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-2xl border border-border/50 bg-background/50 p-4 cursor-pointer hover:border-primary/20 hover:bg-background/80 transition-all duration-200"
+                  className="group relative flex cursor-pointer flex-col justify-between gap-2 rounded-2xl border border-border/50 bg-background/50 p-4 transition-all duration-200 hover:border-primary/20 hover:bg-background/80 sm:flex-row sm:items-center"
                 >
                   <div>
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
                       {detail.label}
                     </span>
-                    <p className="font-mono text-sm text-foreground font-semibold mt-0.5 break-all">
+                    <p className="mt-0.5 font-mono text-sm font-semibold break-all text-foreground">
                       {detail.value}
                     </p>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-xs text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <span className="text-xs font-medium text-primary opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                       {copiedIndex === idx ? "Copied!" : "Click to Copy"}
                     </span>
                     <HugeiconsIcon
                       icon={ClipboardCheckIcon}
-                      className="size-4 text-muted-foreground group-hover:text-primary transition-colors duration-200"
+                      className="size-4 text-muted-foreground transition-colors duration-200 group-hover:text-primary"
                     />
                   </div>
                 </div>
@@ -151,46 +162,64 @@ export default function DonatePage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="md:col-span-5 flex flex-col items-center rounded-3xl border border-primary/10 bg-primary/[0.01] p-6 sm:p-8 text-center"
+            className="flex flex-col items-center rounded-3xl border border-primary/10 bg-primary/1 p-6 text-center sm:p-8 md:col-span-5"
           >
-            <h2 className="text-xl font-bold text-foreground">Scan to Pay via UPI</h2>
-            <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+            <h2 className="text-xl font-bold text-foreground">
+              Scan to Pay via UPI
+            </h2>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
               Quick donation through GPay, PhonePe, Paytm, or BHIM apps.
             </p>
 
             {/* Premium QR placeholder container */}
-            <div className="relative mt-6 aspect-square w-full max-w-[240px] overflow-hidden rounded-2xl border border-border/80 bg-background p-4 flex flex-col items-center justify-center shadow-inner">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-transparent" />
+            <div className="relative mt-6 flex aspect-square w-full max-w-[240px] flex-col items-center justify-center overflow-hidden rounded-2xl border border-border/80 bg-background p-4 shadow-inner">
+              <div className="absolute inset-0 bg-linear-to-br from-primary/4 to-transparent" />
               {/* Graphic QR Simulation */}
-              <div className="relative size-full flex items-center justify-center border-4 border-dashed border-primary/20 rounded-xl">
-                <HugeiconsIcon icon={FavouriteIcon} className="size-16 text-primary/30 animate-pulse" />
-                <span className="absolute bottom-2 font-mono text-[9px] font-bold text-primary/60 uppercase tracking-widest">
+              <div className="relative flex size-full items-center justify-center rounded-xl border-4 border-dashed border-primary/20">
+                <HugeiconsIcon
+                  icon={FavouriteIcon}
+                  className="size-16 animate-pulse text-primary/30"
+                />
+                <span className="absolute bottom-2 font-mono text-[9px] font-bold tracking-widest text-primary/60 uppercase">
                   Scan QR Code
                 </span>
               </div>
             </div>
 
             <div className="mt-6 w-full space-y-3">
-              <div className="rounded-xl border border-border/50 bg-background/50 py-2.5 px-4">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase">UPI ID</span>
-                <p className="font-mono text-sm text-foreground font-semibold mt-0.5">unconditionalhelp@sbi</p>
+              <div className="rounded-xl border border-border/50 bg-background/50 px-4 py-2.5">
+                <span className="text-[10px] font-bold text-muted-foreground uppercase">
+                  UPI ID
+                </span>
+                <p className="mt-0.5 font-mono text-sm font-semibold text-foreground">
+                  unconditionalhelp@sbi
+                </p>
               </div>
 
-              <div className="text-[11px] text-muted-foreground leading-relaxed">
-                Registered Trust: <span className="font-semibold text-foreground">Unconditional Help Bhavnagar</span>
+              <div className="text-[11px] leading-relaxed text-muted-foreground">
+                Registered Trust:{" "}
+                <span className="font-semibold text-foreground">
+                  Unconditional Help Bhavnagar
+                </span>
                 <br />
-                Registration No: <span className="font-mono font-semibold text-foreground">E/8140/Bhavnagar</span>
+                Registration No:{" "}
+                <span className="font-mono font-semibold text-foreground">
+                  E/8140/Bhavnagar
+                </span>
               </div>
             </div>
           </motion.div>
         </div>
 
         {/* FAQs */}
-        <div className="mt-24 max-w-3xl mx-auto">
+        <div className="mx-auto mt-24 max-w-3xl">
           <div className="text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Donation FAQs</h2>
-            <p className="mt-3 text-muted-foreground text-sm">
-              Common questions and transparent answers regarding our financial model.
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Donation FAQs
+            </h2>
+            <p className="mt-3 text-sm text-muted-foreground">
+              Common questions and transparent answers regarding our financial
+              model.
             </p>
           </div>
 
@@ -200,12 +229,12 @@ export default function DonatePage() {
                 <AccordionItem
                   key={idx}
                   value={`faq-${idx}`}
-                  className="rounded-2xl border border-border/60 bg-muted/10 overflow-hidden transition-all duration-200 mb-4 last:mb-0"
+                  className="mb-4 overflow-hidden rounded-2xl border border-border/60 bg-muted/10 transition-all duration-200 last:mb-0"
                 >
-                  <AccordionTrigger className="w-full flex items-center justify-between text-left p-5 font-semibold text-foreground hover:bg-muted/30 hover:no-underline transition-colors duration-200 text-sm sm:text-base border-b-0">
+                  <AccordionTrigger className="flex w-full items-center justify-between border-b-0 p-5 text-left text-sm font-semibold text-foreground transition-colors duration-200 hover:bg-muted/30 hover:no-underline sm:text-base">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="px-5 pb-5 pt-0 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  <AccordionContent className="px-5 pt-0 pb-5 text-xs leading-relaxed text-muted-foreground sm:text-sm">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>

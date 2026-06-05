@@ -34,7 +34,10 @@ export function GalleryClient({ items }: { items: GalleryItem[] }) {
   const [selectedCategory, setSelectedCategory] = useState<string>("All")
   const [activeItem, setActiveItem] = useState<GalleryItem | null>(null)
 
-  const CATEGORIES = ["All", ...Array.from(new Set(items.map((i) => i.category)))]
+  const CATEGORIES = [
+    "All",
+    ...Array.from(new Set(items.map((i) => i.category))),
+  ]
 
   const filteredItems = items.filter(
     (item) => selectedCategory === "All" || item.category === selectedCategory
@@ -43,17 +46,20 @@ export function GalleryClient({ items }: { items: GalleryItem[] }) {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background pt-24 pb-20">
       {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_-20%,#000_70%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] mask-[radial-gradient(ellipse_80%_50%_at_50%_-20%,#000_70%,transparent_100%)] bg-size-[14px_24px]" />
 
       {/* Background Orbs */}
-      <div className="absolute top-40 -left-20 size-[320px] rounded-full bg-primary/[0.03] blur-3xl" />
-      <div className="absolute top-[800px] -right-20 size-[400px] rounded-full bg-primary/[0.02] blur-3xl" />
+      <div className="absolute top-40 -left-20 size-[320px] rounded-full bg-primary/3 blur-3xl" />
+      <div className="absolute top-[800px] -right-20 size-[400px] rounded-full bg-primary/2 blur-3xl" />
 
-      <div className="container relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center">
           <FadeIn>
-            <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
+            <Badge
+              variant="outline"
+              className="gap-1.5 rounded-full border-0 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"
+            >
               <HugeiconsIcon icon={FavouriteIcon} className="size-3.5" />
               Our Campaign Impact
             </Badge>
@@ -76,8 +82,9 @@ export function GalleryClient({ items }: { items: GalleryItem[] }) {
                 </svg>
               </span>
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground leading-relaxed">
-              Explore visual moments capturing our ground efforts, community drives, and the direct impact made by our volunteers.
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              Explore visual moments capturing our ground efforts, community
+              drives, and the direct impact made by our volunteers.
             </p>
           </FadeIn>
         </div>
@@ -91,7 +98,7 @@ export function GalleryClient({ items }: { items: GalleryItem[] }) {
               className={`rounded-full px-5 py-2 text-xs font-semibold shadow-sm transition-all duration-300 ${
                 selectedCategory === category
                   ? "bg-primary text-primary-foreground shadow-primary/25"
-                  : "bg-muted/40 text-muted-foreground hover:bg-muted/70 hover:text-foreground border border-border/40"
+                  : "border border-border/40 bg-muted/40 text-muted-foreground hover:bg-muted/70 hover:text-foreground"
               }`}
             >
               {category}
@@ -102,22 +109,32 @@ export function GalleryClient({ items }: { items: GalleryItem[] }) {
         {/* Gallery Grid */}
         <motion.div layout className="mt-12">
           {items.length === 0 ? (
-            <div className="text-center py-24 bg-muted/30 rounded-[2rem] border border-border/50 shadow-inner">
-              <div className="mx-auto size-16 bg-background rounded-full flex items-center justify-center border border-border/50 mb-4 shadow-sm text-muted-foreground">
+            <div className="rounded-[2rem] border border-border/50 bg-muted/30 py-24 text-center shadow-inner">
+              <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full border border-border/50 bg-background text-muted-foreground shadow-sm">
                 <HugeiconsIcon icon={Image01Icon} size={28} />
               </div>
-              <h3 className="text-2xl font-bold text-foreground mb-2">No Gallery Items Yet</h3>
-              <p className="text-muted-foreground max-w-md mx-auto">
-                We are still compiling our visual moments. Check back soon for updates!
+              <h3 className="mb-2 text-2xl font-bold text-foreground">
+                No Gallery Items Yet
+              </h3>
+              <p className="mx-auto max-w-md text-muted-foreground">
+                We are still compiling our visual moments. Check back soon for
+                updates!
               </p>
             </div>
           ) : filteredItems.length === 0 ? (
-            <div className="text-center py-20 bg-muted/10 rounded-3xl border border-border/50">
-              <h3 className="text-xl font-medium text-foreground mb-2">No items in this category</h3>
-              <p className="text-muted-foreground">Try selecting a different category.</p>
+            <div className="rounded-3xl border border-border/50 bg-muted/10 py-20 text-center">
+              <h3 className="mb-2 text-xl font-medium text-foreground">
+                No items in this category
+              </h3>
+              <p className="text-muted-foreground">
+                Try selecting a different category.
+              </p>
             </div>
           ) : (
-            <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <motion.div
+              layout
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            >
               <AnimatePresence mode="popLayout">
                 {filteredItems.map((item) => {
                   const Icon = ICON_MAP[item.icon] || FavouriteIcon
@@ -130,15 +147,19 @@ export function GalleryClient({ items }: { items: GalleryItem[] }) {
                       transition={{ duration: 0.4 }}
                       key={item.id}
                       onClick={() => setActiveItem(item)}
-                      className={`group relative overflow-hidden rounded-3xl border border-border/60 bg-muted/15 p-5 cursor-pointer hover:border-primary/20 hover:bg-muted/20 hover:shadow-md transition-all duration-300`}
+                      className={`group relative cursor-pointer overflow-hidden rounded-3xl border border-border/60 bg-muted/15 p-5 transition-all duration-300 hover:border-primary/20 hover:bg-muted/20 hover:shadow-md`}
                     >
                       {/* Media card representation */}
-                      <div className={`relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gradient-to-br ${item.gradient || 'from-primary/10 to-primary/20'} border ${item.border || 'border-border/10'} flex items-center justify-center`}>
-                        <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.15)_1.2px,transparent_1.2px)] bg-[size:16px_16px]" />
-                        <div className={`p-4 rounded-full bg-background border border-border/60 shadow-sm ${item.accent || 'text-primary'} transition-transform duration-300 group-hover:scale-110`}>
+                      <div
+                        className={`relative aspect-4/3 w-full overflow-hidden rounded-2xl bg-linear-to-br ${item.gradient || "from-primary/10 to-primary/20"} border ${item.border || "border-border/10"} flex items-center justify-center`}
+                      >
+                        <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.15)_1.2px,transparent_1.2px)] bg-size-[16px_16px]" />
+                        <div
+                          className={`rounded-full border border-border/60 bg-background p-4 shadow-sm ${item.accent || "text-primary"} transition-transform duration-300 group-hover:scale-110`}
+                        >
                           <HugeiconsIcon icon={Icon} className="size-8" />
                         </div>
-                        <span className="absolute bottom-3 left-3 rounded-full bg-background/80 backdrop-blur-md px-2.5 py-0.5 text-[9px] font-bold tracking-wide uppercase text-muted-foreground border border-border/40">
+                        <span className="absolute bottom-3 left-3 rounded-full border border-border/40 bg-background/80 px-2.5 py-0.5 text-[9px] font-bold tracking-wide text-muted-foreground uppercase backdrop-blur-md">
                           {item.category}
                         </span>
                       </div>
@@ -148,7 +169,7 @@ export function GalleryClient({ items }: { items: GalleryItem[] }) {
                           <span>{item.date}</span>
                           <span>{item.location}</span>
                         </div>
-                        <h3 className="mt-2 text-lg font-bold leading-tight text-foreground group-hover:text-primary transition-colors">
+                        <h3 className="mt-2 text-lg leading-tight font-bold text-foreground transition-colors group-hover:text-primary">
                           {item.title}
                         </h3>
                       </div>
@@ -164,7 +185,10 @@ export function GalleryClient({ items }: { items: GalleryItem[] }) {
       {/* Lightbox Modal */}
       <AnimatePresence>
         {activeItem && (
-          <Dialog open={!!activeItem} onOpenChange={(open) => !open && setActiveItem(null)}>
+          <Dialog
+            open={!!activeItem}
+            onOpenChange={(open) => !open && setActiveItem(null)}
+          >
             <DialogContent className="max-w-2xl overflow-hidden rounded-3xl border-border/50 bg-background/95 p-0 backdrop-blur-xl sm:rounded-[2.5rem]">
               <DialogHeader className="sr-only">
                 <DialogTitle>{activeItem.title}</DialogTitle>
@@ -172,12 +196,21 @@ export function GalleryClient({ items }: { items: GalleryItem[] }) {
               </DialogHeader>
 
               {/* Large Media Representation */}
-              <div className={`relative aspect-video w-full bg-gradient-to-br ${activeItem.gradient || 'from-primary/10 to-primary/20'} flex items-center justify-center`}>
-                <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.15)_1.2px,transparent_1.2px)] bg-[size:16px_16px]" />
-                <div className={`p-6 rounded-full bg-background/50 backdrop-blur-md border border-background/20 shadow-xl ${activeItem.accent || 'text-primary'}`}>
+              <div
+                className={`relative aspect-video w-full bg-linear-to-br ${activeItem.gradient || "from-primary/10 to-primary/20"} flex items-center justify-center`}
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.15)_1.2px,transparent_1.2px)] bg-size-[16px_16px]" />
+                <div
+                  className={`rounded-full border border-background/20 bg-background/50 p-6 shadow-xl backdrop-blur-md ${activeItem.accent || "text-primary"}`}
+                >
                   {(() => {
                     const ModalIcon = ICON_MAP[activeItem.icon] || FavouriteIcon
-                    return <HugeiconsIcon icon={ModalIcon} className="size-16 drop-shadow-md" />
+                    return (
+                      <HugeiconsIcon
+                        icon={ModalIcon}
+                        className="size-16 drop-shadow-md"
+                      />
+                    )
                   })()}
                 </div>
               </div>
@@ -185,7 +218,10 @@ export function GalleryClient({ items }: { items: GalleryItem[] }) {
               {/* Content area */}
               <div className="p-8 sm:p-10">
                 <div className="mb-4 flex flex-wrap items-center gap-3">
-                  <Badge variant="secondary" className="rounded-full bg-muted px-3 text-[10px] font-bold text-muted-foreground uppercase border-border/40 shadow-sm">
+                  <Badge
+                    variant="secondary"
+                    className="rounded-full border-border/40 bg-muted px-3 text-[10px] font-bold text-muted-foreground uppercase shadow-sm"
+                  >
                     {activeItem.category}
                   </Badge>
                   <span className="text-xs font-medium text-muted-foreground">
@@ -196,14 +232,19 @@ export function GalleryClient({ items }: { items: GalleryItem[] }) {
                 <h2 className="mb-4 text-2xl font-extrabold text-foreground sm:text-3xl">
                   {activeItem.title}
                 </h2>
-                
+
                 <p className="mb-6 text-base leading-relaxed text-muted-foreground">
                   {activeItem.description}
                 </p>
 
                 <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-muted/30 px-4 py-2 text-sm text-foreground shadow-sm">
-                  <HugeiconsIcon icon={FavouriteIcon} size={16} className="text-primary" />
-                  Location: <span className="font-semibold">{activeItem.location}</span>
+                  <HugeiconsIcon
+                    icon={FavouriteIcon}
+                    size={16}
+                    className="text-primary"
+                  />
+                  Location:{" "}
+                  <span className="font-semibold">{activeItem.location}</span>
                 </div>
               </div>
             </DialogContent>

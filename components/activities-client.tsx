@@ -12,7 +12,10 @@ export function ActivitiesClient({ activities }: { activities: Activity[] }) {
   const [selectedCategory, setSelectedCategory] = useState<string>("All")
 
   // Dynamically get unique categories from activities
-  const CATEGORIES = ["All", ...Array.from(new Set(activities.map((a) => a.category)))]
+  const CATEGORIES = [
+    "All",
+    ...Array.from(new Set(activities.map((a) => a.category))),
+  ]
 
   const filteredItems = activities.filter(
     (item) => selectedCategory === "All" || item.category === selectedCategory
@@ -21,13 +24,13 @@ export function ActivitiesClient({ activities }: { activities: Activity[] }) {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background pt-24 pb-20">
       {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_-20%,#000_70%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_-20%,#000_70%,transparent_100%)] bg-[size:14px_24px]" />
 
       {/* Decorative Circles */}
       <div className="absolute top-40 -left-20 size-[300px] rounded-full bg-primary/[0.03] blur-3xl" />
       <div className="absolute top-[800px] -right-20 size-[450px] rounded-full bg-primary/[0.02] blur-3xl" />
 
-      <div className="container relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="relative container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="text-center">
           <motion.div
@@ -58,8 +61,9 @@ export function ActivitiesClient({ activities }: { activities: Activity[] }) {
                 </svg>
               </span>
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground leading-relaxed">
-              Explore our recent social initiatives, community events, and the impact we are creating together.
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              Explore our recent social initiatives, community events, and the
+              impact we are creating together.
             </p>
           </motion.div>
         </div>
@@ -73,7 +77,7 @@ export function ActivitiesClient({ activities }: { activities: Activity[] }) {
               className={`rounded-full px-5 py-2 text-xs font-semibold shadow-sm transition-all duration-300 ${
                 selectedCategory === category
                   ? "bg-primary text-primary-foreground shadow-primary/25"
-                  : "bg-muted/40 text-muted-foreground hover:bg-muted/70 hover:text-foreground border border-border/40"
+                  : "border border-border/40 bg-muted/40 text-muted-foreground hover:bg-muted/70 hover:text-foreground"
               }`}
             >
               {category}
@@ -84,17 +88,28 @@ export function ActivitiesClient({ activities }: { activities: Activity[] }) {
         {/* Activities Grid */}
         <motion.div layout className="mt-12">
           {activities.length === 0 ? (
-            <div className="text-center py-20 bg-muted/30 rounded-3xl border border-border/50">
-              <h3 className="text-xl font-medium text-foreground mb-2">No activities found</h3>
-              <p className="text-muted-foreground">Check back later for updates on our recent work.</p>
+            <div className="rounded-3xl border border-border/50 bg-muted/30 py-20 text-center">
+              <h3 className="mb-2 text-xl font-medium text-foreground">
+                No activities found
+              </h3>
+              <p className="text-muted-foreground">
+                Check back later for updates on our recent work.
+              </p>
             </div>
           ) : filteredItems.length === 0 ? (
-            <div className="text-center py-20 bg-muted/10 rounded-3xl border border-border/50">
-              <h3 className="text-xl font-medium text-foreground mb-2">No activities in this category</h3>
-              <p className="text-muted-foreground">Try selecting a different category.</p>
+            <div className="rounded-3xl border border-border/50 bg-muted/10 py-20 text-center">
+              <h3 className="mb-2 text-xl font-medium text-foreground">
+                No activities in this category
+              </h3>
+              <p className="text-muted-foreground">
+                Try selecting a different category.
+              </p>
             </div>
           ) : (
-            <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <motion.div
+              layout
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            >
               <AnimatePresence mode="popLayout">
                 {filteredItems.map((activity) => (
                   <motion.div
@@ -107,10 +122,10 @@ export function ActivitiesClient({ activities }: { activities: Activity[] }) {
                   >
                     <Link
                       href={`/activities/${activity.slug}`}
-                      className="group relative flex flex-col overflow-hidden rounded-3xl border border-border/60 bg-muted/15 p-5 cursor-pointer hover:border-primary/20 hover:bg-muted/20 hover:shadow-md transition-all duration-300 h-full"
+                      className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-border/60 bg-muted/15 p-5 transition-all duration-300 hover:border-primary/20 hover:bg-muted/20 hover:shadow-md"
                     >
                       {/* Image Container */}
-                      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted border border-border/10 flex items-center justify-center">
+                      <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-2xl border border-border/10 bg-muted">
                         <Image
                           src={activity.cover_image}
                           alt={activity.title}
@@ -118,7 +133,7 @@ export function ActivitiesClient({ activities }: { activities: Activity[] }) {
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
-                        <span className="absolute bottom-3 left-3 rounded-full bg-background/80 px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-muted-foreground backdrop-blur-md border border-border/40">
+                        <span className="absolute bottom-3 left-3 rounded-full border border-border/40 bg-background/80 px-2.5 py-0.5 text-[9px] font-bold tracking-wide text-muted-foreground uppercase backdrop-blur-md">
                           {activity.category}
                         </span>
                       </div>

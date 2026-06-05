@@ -21,7 +21,8 @@ const dmSerif = DM_Serif_Display({
   display: "swap",
 })
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://unconditionalhelp.vercel.app"
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://unconditionalhelp.vercel.app"
 
 export const viewport: Viewport = {
   themeColor: [
@@ -73,7 +74,12 @@ export const metadata: Metadata = {
     title: `${TRUST.name} — ${TRUST.tagline}`,
     description: TRUST.description,
     images: [
-      { url: `${siteUrl}/hero-bg.png`, width: 1200, height: 630, alt: TRUST.name },
+      {
+        url: `${siteUrl}/hero-bg.png`,
+        width: 1200,
+        height: 630,
+        alt: TRUST.name,
+      },
     ],
   },
   twitter: {

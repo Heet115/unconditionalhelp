@@ -20,7 +20,8 @@ import { Button } from "@/components/ui/button"
 const VALUES = [
   {
     title: "Unconditional Love",
-    description: "Serving every life, animal or human, without expectations, bias, or strings attached.",
+    description:
+      "Serving every life, animal or human, without expectations, bias, or strings attached.",
     icon: FavouriteIcon,
     bg: "bg-rose-500/[0.03]",
     border: "border-rose-500/10",
@@ -28,7 +29,8 @@ const VALUES = [
   },
   {
     title: "Direct Action",
-    description: "We don't wait for things to improve. We physically distribute meals, plant trees, and rescue animals ourselves.",
+    description:
+      "We don't wait for things to improve. We physically distribute meals, plant trees, and rescue animals ourselves.",
     icon: HeartHandshakeIcon,
     bg: "bg-primary/[0.03]",
     border: "border-primary/10",
@@ -36,7 +38,8 @@ const VALUES = [
   },
   {
     title: "100% Transparency",
-    description: "Every single rupee donated is logged and documented. We provide real-time updates and public progress reports.",
+    description:
+      "Every single rupee donated is logged and documented. We provide real-time updates and public progress reports.",
     icon: ClipboardCheckIcon,
     bg: "bg-sky-500/[0.03]",
     border: "border-sky-500/10",
@@ -44,7 +47,8 @@ const VALUES = [
   },
   {
     title: "Community Growth",
-    description: "Fostering collaboration, equality, and volunteerism to build a self-sustaining ecosystem of kindness.",
+    description:
+      "Fostering collaboration, equality, and volunteerism to build a self-sustaining ecosystem of kindness.",
     icon: UserGroup03Icon,
     bg: "bg-amber-500/[0.03]",
     border: "border-amber-500/10",
@@ -56,22 +60,26 @@ const TIMELINE = [
   {
     year: "2018",
     title: "Where It All Began",
-    description: "Founded on September 5th, 2018 by Vivek Parmar with a single promise: to serve those who cannot ask for help.",
+    description:
+      "Founded on September 5th, 2018 by Vivek Parmar with a single promise: to serve those who cannot ask for help.",
   },
   {
     year: "2020",
     title: "COVID-19 Relief Response",
-    description: "Distributed emergency food kits and daily warm meals to migrant workers and daily wagers throughout lockdown.",
+    description:
+      "Distributed emergency food kits and daily warm meals to migrant workers and daily wagers throughout lockdown.",
   },
   {
     year: "2022",
     title: "Expanding to Animal & Nature Welfare",
-    description: "Launched dedicated animal feeding routes and organized large-scale local tree plantation campaigns in Bhavnagar.",
+    description:
+      "Launched dedicated animal feeding routes and organized large-scale local tree plantation campaigns in Bhavnagar.",
   },
   {
     year: "2026",
     title: "A Growing Family of Kindness",
-    description: "Over 10,000+ meals served, 5,000+ trees planted, and a active community of 200+ passionate volunteers.",
+    description:
+      "Over 10,000+ meals served, 5,000+ trees planted, and a active community of 200+ passionate volunteers.",
   },
 ]
 
@@ -106,11 +114,11 @@ export default function AboutPage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background pt-24 pb-20">
       {/* Background patterns */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_-20%,#000_70%,transparent_100%)] bg-[size:14px_24px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] mask-[radial-gradient(ellipse_80%_50%_at_50%_-20%,#000_70%,transparent_100%)] bg-size-[14px_24px]" />
 
       {/* Floating design circles */}
-      <div className="absolute top-40 -left-20 size-[350px] rounded-full bg-primary/[0.03] blur-3xl" />
-      <div className="absolute top-[600px] -right-20 size-[400px] rounded-full bg-primary/[0.02] blur-3xl" />
+      <div className="absolute top-40 -left-20 size-[350px] rounded-full bg-primary/3 blur-3xl" />
+      <div className="absolute top-[600px] -right-20 size-[400px] rounded-full bg-primary/2 blur-3xl" />
 
       <div className="relative container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Hero */}
@@ -120,7 +128,10 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
+            <Badge
+              variant="outline"
+              className="gap-1.5 rounded-full border-0 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"
+            >
               <HugeiconsIcon icon={FavouriteIcon} className="size-3.5" />
               Our Story
             </Badge>
@@ -164,7 +175,7 @@ export default function AboutPage() {
             <div className="md:col-span-5">
               <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-border bg-muted/40 shadow-sm">
                 {/* SVG Avatar Placeholder */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-primary/5 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-tr from-primary/10 via-primary/5 to-transparent" />
                 <HugeiconsIcon
                   icon={FavouriteIcon}
                   className="size-24 animate-pulse text-primary/30"
@@ -286,7 +297,10 @@ export default function AboutPage() {
         {/* Transparency Section */}
         <div className="mt-28 rounded-3xl border border-border/60 bg-muted/10 p-8 md:p-12">
           <div className="text-center">
-            <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
+            <Badge
+              variant="outline"
+              className="gap-1.5 rounded-full border-0 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"
+            >
               <HugeiconsIcon icon={ClipboardCheckIcon} className="size-3.5" />
               100% Financial Accountability
             </Badge>
@@ -294,7 +308,9 @@ export default function AboutPage() {
               Our Transparency Pledge
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-              We believe that trust is built on clarity. We account for every single rupee donated to ensure it directly benefits the lives we serve.
+              We believe that trust is built on clarity. We account for every
+              single rupee donated to ensure it directly benefits the lives we
+              serve.
             </p>
           </div>
 
@@ -305,9 +321,13 @@ export default function AboutPage() {
                 <div className="inline-flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
                   <HugeiconsIcon icon={CharityIcon} className="size-5" />
                 </div>
-                <h3 className="mt-4 text-lg font-bold text-foreground">0% Admin Fee Cut</h3>
+                <h3 className="mt-4 text-lg font-bold text-foreground">
+                  0% Admin Fee Cut
+                </h3>
                 <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  All administrative and logistics costs are funded out-of-pocket by the founder and trustees. Every rupee you donate goes 100% directly to ground campaigns.
+                  All administrative and logistics costs are funded
+                  out-of-pocket by the founder and trustees. Every rupee you
+                  donate goes 100% directly to ground campaigns.
                 </p>
               </CardContent>
             </Card>
@@ -317,9 +337,13 @@ export default function AboutPage() {
                 <div className="inline-flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
                   <HugeiconsIcon icon={ClipboardCheckIcon} className="size-5" />
                 </div>
-                <h3 className="mt-4 text-lg font-bold text-foreground">Open Ledger Policy</h3>
+                <h3 className="mt-4 text-lg font-bold text-foreground">
+                  Open Ledger Policy
+                </h3>
                 <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  Complete invoices, purchase bills, and distribution accounts are documented. Any donor can request a detailed statement of their donation utilization at any time.
+                  Complete invoices, purchase bills, and distribution accounts
+                  are documented. Any donor can request a detailed statement of
+                  their donation utilization at any time.
                 </p>
               </CardContent>
             </Card>
@@ -329,9 +353,13 @@ export default function AboutPage() {
                 <div className="inline-flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
                   <HugeiconsIcon icon={UserGroup03Icon} className="size-5" />
                 </div>
-                <h3 className="mt-4 text-lg font-bold text-foreground">Daily Proof of Work</h3>
+                <h3 className="mt-4 text-lg font-bold text-foreground">
+                  Daily Proof of Work
+                </h3>
                 <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  We document our distributions daily with photos and video updates on our WhatsApp status and social channels, offering real-time visibility into active campaigns.
+                  We document our distributions daily with photos and video
+                  updates on our WhatsApp status and social channels, offering
+                  real-time visibility into active campaigns.
                 </p>
               </CardContent>
             </Card>
@@ -339,72 +367,83 @@ export default function AboutPage() {
 
           {/* Allocation Breakdown Progress Bars */}
           <div className="mt-12 rounded-2xl border border-border/50 bg-background p-6 md:p-8">
-            <h3 className="text-lg font-bold text-foreground">Current Fund Allocation</h3>
-            <p className="text-xs text-muted-foreground mt-1">
-              Visual breakdown of where and how all public donations are distributed across our active service areas.
+            <h3 className="text-lg font-bold text-foreground">
+              Current Fund Allocation
+            </h3>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Visual breakdown of where and how all public donations are
+              distributed across our active service areas.
             </p>
 
             <div className="mt-6 space-y-4">
               <div>
-                <div className="flex items-center justify-between text-xs font-semibold mb-1.5">
-                  <span className="text-foreground">Daily Free Food Distribution</span>
-                  <span className="text-primary font-bold">60%</span>
+                <div className="mb-1.5 flex items-center justify-between text-xs font-semibold">
+                  <span className="text-foreground">
+                    Daily Free Food Distribution
+                  </span>
+                  <span className="font-bold text-primary">60%</span>
                 </div>
-                <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: "60%" }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="h-full bg-primary rounded-full"
+                    className="h-full rounded-full bg-primary"
                   />
                 </div>
               </div>
 
               <div>
-                <div className="flex items-center justify-between text-xs font-semibold mb-1.5">
-                  <span className="text-foreground">Environmental & Tree Plantation Drives</span>
-                  <span className="text-primary font-bold">20%</span>
+                <div className="mb-1.5 flex items-center justify-between text-xs font-semibold">
+                  <span className="text-foreground">
+                    Environmental & Tree Plantation Drives
+                  </span>
+                  <span className="font-bold text-primary">20%</span>
                 </div>
-                <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: "20%" }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="h-full bg-primary rounded-full"
+                    className="h-full rounded-full bg-primary"
                   />
                 </div>
               </div>
 
               <div>
-                <div className="flex items-center justify-between text-xs font-semibold mb-1.5">
-                  <span className="text-foreground">Animal Rescue & Feeding Routes</span>
-                  <span className="text-primary font-bold">15%</span>
+                <div className="mb-1.5 flex items-center justify-between text-xs font-semibold">
+                  <span className="text-foreground">
+                    Animal Rescue & Feeding Routes
+                  </span>
+                  <span className="font-bold text-primary">15%</span>
                 </div>
-                <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: "15%" }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="h-full bg-primary rounded-full"
+                    className="h-full rounded-full bg-primary"
                   />
                 </div>
               </div>
 
               <div>
-                <div className="flex items-center justify-between text-xs font-semibold mb-1.5">
-                  <span className="text-foreground">Student Educational Support & Tuition Kits</span>
-                  <span className="text-primary font-bold">5%</span>
+                <div className="mb-1.5 flex items-center justify-between text-xs font-semibold">
+                  <span className="text-foreground">
+                    Student Educational Support & Tuition Kits
+                  </span>
+                  <span className="font-bold text-primary">5%</span>
                 </div>
-                <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: "5%" }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="h-full bg-primary rounded-full"
+                    className="h-full rounded-full bg-primary"
                   />
                 </div>
               </div>
@@ -419,7 +458,8 @@ export default function AboutPage() {
               Core Team & Key Volunteers
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-              Meet the passionate individuals driving the daily operations of {TRUST.name}.
+              Meet the passionate individuals driving the daily operations of{" "}
+              {TRUST.name}.
             </p>
           </div>
 
@@ -434,16 +474,19 @@ export default function AboutPage() {
                 className="group relative overflow-hidden rounded-3xl border border-border/60 bg-muted/10 p-6 text-center transition-all duration-300 hover:border-primary/30 hover:bg-muted/15"
               >
                 {/* Team Card Top Gradient Accent */}
-                <div className="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-primary/40 via-primary/20 to-primary/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                
+                <div className="absolute inset-x-0 top-0 h-2 bg-linear-to-r from-primary/40 via-primary/20 to-primary/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
                 <div className="mx-auto flex size-20 items-center justify-center rounded-2xl border border-border/80 bg-background text-primary shadow-sm transition-transform duration-300 group-hover:scale-105">
-                  <HugeiconsIcon icon={member.icon} className="size-8 text-primary/80" />
+                  <HugeiconsIcon
+                    icon={member.icon}
+                    className="size-8 text-primary/80"
+                  />
                 </div>
 
                 <h3 className="mt-5 text-lg font-bold text-foreground transition-colors duration-200 group-hover:text-primary">
                   {member.name}
                 </h3>
-                <p className="text-xs font-semibold text-primary/80 mt-1 uppercase tracking-wider">
+                <p className="mt-1 text-xs font-semibold tracking-wider text-primary/80 uppercase">
                   {member.role}
                 </p>
                 <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
@@ -459,18 +502,24 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mt-16 flex flex-col items-center justify-between gap-6 rounded-3xl border border-primary/10 bg-primary/[0.01] p-8 text-center md:flex-row md:text-left"
+            className="mt-16 flex flex-col items-center justify-between gap-6 rounded-3xl border border-primary/10 bg-primary/1 p-8 text-center md:flex-row md:text-left"
           >
             <div>
-              <h3 className="text-xl font-bold text-foreground">Our 200+ Volunteer Force</h3>
-              <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed max-w-2xl">
-                UH Bhavnagar runs entirely on the spirit of volunteers. From students to local citizens, our community steps out every single day to serve meals, plant hope, and help those in need.
+              <h3 className="text-xl font-bold text-foreground">
+                Our 200+ Volunteer Force
+              </h3>
+              <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-muted-foreground">
+                UH Bhavnagar runs entirely on the spirit of volunteers. From
+                students to local citizens, our community steps out every single
+                day to serve meals, plant hope, and help those in need.
               </p>
             </div>
-            <Button asChild size="lg" className="rounded-full shadow-md shadow-primary/10">
-              <Link href="/volunteer">
-                Join the Movement
-              </Link>
+            <Button
+              asChild
+              size="lg"
+              className="rounded-full shadow-md shadow-primary/10"
+            >
+              <Link href="/volunteer">Join the Movement</Link>
             </Button>
           </motion.div>
         </div>

@@ -34,8 +34,8 @@ export function ServicesPreview() {
 
   return (
     <section ref={ref} className="relative overflow-hidden py-20 md:py-28">
-      <div className="absolute top-10 -right-24 size-[350px] rounded-full bg-primary/[0.05]" />
-      <div className="absolute -bottom-16 -left-16 size-[250px] rounded-full bg-primary/[0.04]" />
+      <div className="absolute top-10 -right-24 size-[350px] rounded-full bg-primary/5" />
+      <div className="absolute -bottom-16 -left-16 size-[250px] rounded-full bg-primary/4" />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.2]"
         style={{

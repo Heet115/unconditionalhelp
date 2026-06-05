@@ -38,8 +38,8 @@ export function Footer() {
       </div>
 
       {/* Decorative elements */}
-      <div className="absolute -top-16 -right-16 size-[250px] rounded-full bg-primary/[0.04]" />
-      <div className="absolute -bottom-20 -left-20 size-[300px] rounded-full bg-primary/[0.05]" />
+      <div className="absolute -top-16 -right-16 size-[250px] rounded-full bg-primary/4" />
+      <div className="absolute -bottom-20 -left-20 size-[300px] rounded-full bg-primary/5" />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.2]"
         style={{

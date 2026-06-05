@@ -25,16 +25,19 @@ export default async function ImpactPage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background pt-24 pb-20">
       {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_-20%,#000_70%,transparent_100%)] bg-[size:14px_24px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] mask-[radial-gradient(ellipse_80%_50%_at_50%_-20%,#000_70%,transparent_100%)] bg-size-[14px_24px]" />
 
       {/* Decorative Circles */}
-      <div className="absolute top-40 -left-20 size-[300px] rounded-full bg-primary/[0.03] blur-3xl" />
-      <div className="absolute top-[800px] -right-20 size-[450px] rounded-full bg-primary/[0.02] blur-3xl" />
+      <div className="absolute top-40 -left-20 size-[300px] rounded-full bg-primary/3 blur-3xl" />
+      <div className="absolute top-[800px] -right-20 size-[450px] rounded-full bg-primary/2 blur-3xl" />
 
       <div className="relative container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <FadeIn className="mb-16 text-center">
-          <Badge variant="outline" className="gap-1.5 rounded-full bg-primary/10 border-0 px-3 py-1 text-xs font-semibold text-primary">
+          <Badge
+            variant="outline"
+            className="gap-1.5 rounded-full border-0 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"
+          >
             <HugeiconsIcon icon={FavouriteIcon} className="size-3.5" />
             Creating Change
           </Badge>

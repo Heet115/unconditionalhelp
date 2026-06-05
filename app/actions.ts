@@ -24,25 +24,29 @@ export async function submitContactForm(data: ContactInput) {
   }
 
   try {
-    const { error } = await supabase
-      .from("contact_submissions")
-      .insert([
-        {
-          name: data.name,
-          email: data.email,
-          phone: data.phone || null,
-          message: data.message,
-        },
-      ])
+    const { error } = await supabase.from("contact_submissions").insert([
+      {
+        name: data.name,
+        email: data.email,
+        phone: data.phone || null,
+        message: data.message,
+      },
+    ])
 
     if (error) {
       throw error
     }
 
-    return { success: true, message: "Thank you! Your message has been sent successfully." }
+    return {
+      success: true,
+      message: "Thank you! Your message has been sent successfully.",
+    }
   } catch (error) {
     console.error("Contact form error:", error)
-    return { success: false, error: "Something went wrong. Please try again later." }
+    return {
+      success: false,
+      error: "Something went wrong. Please try again later.",
+    }
   }
 }
 
@@ -53,25 +57,29 @@ export async function submitVolunteerForm(data: VolunteerInput) {
   }
 
   try {
-    const { error } = await supabase
-      .from("volunteer_applications")
-      .insert([
-        {
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          focus_area: data.focusArea,
-          message: data.message || null,
-        },
-      ])
+    const { error } = await supabase.from("volunteer_applications").insert([
+      {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        focus_area: data.focusArea,
+        message: data.message || null,
+      },
+    ])
 
     if (error) {
       throw error
     }
 
-    return { success: true, message: "Thank you for volunteering! We will contact you soon." }
+    return {
+      success: true,
+      message: "Thank you for volunteering! We will contact you soon.",
+    }
   } catch (error) {
     console.error("Volunteer form error:", error)
-    return { success: false, error: "Something went wrong. Please try again later." }
+    return {
+      success: false,
+      error: "Something went wrong. Please try again later.",
+    }
   }
 }
