@@ -23,7 +23,7 @@ export const NAV_LINKS = [
     items: [
       { label: "Activities", href: "/activities" },
       { label: "Upcoming Events", href: "/events" },
-      { label: "Impact", href: "/impact" },
+
       { label: "Gallery", href: "/gallery" },
     ],
   },
@@ -82,15 +82,7 @@ export const SERVICES = [
   },
 ] as const
 
-// ─── Impact Statistics ───────────────────────────────────────────────
-export const IMPACT_STATS = [
-  { label: "Meals Served", value: 10000, suffix: "+", icon: "meals" },
-  { label: "Trees Planted", value: 5000, suffix: "+", icon: "trees" },
-  { label: "Students Supported", value: 500, suffix: "+", icon: "students" },
-  { label: "Families Helped", value: 2000, suffix: "+", icon: "families" },
-  { label: "Animals Fed", value: 3000, suffix: "+", icon: "animals" },
-  { label: "Volunteers", value: 200, suffix: "+", icon: "volunteers" },
-] as const
+
 
 // ─── How We Work Steps ───────────────────────────────────────────────
 export const HOW_WE_WORK = [
