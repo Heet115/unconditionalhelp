@@ -355,19 +355,18 @@ export default function VolunteerPage() {
               </div>
 
               {/* Focus Area selector */}
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
+              <fieldset className="flex flex-col gap-1.5">
+                <legend className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
                   Area of Interest <span className="text-primary">*</span>
-                </Label>
+                </legend>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {FOCUS_AREAS.map((area) => {
                     const isSelected = formData.focusArea === area.value
                     return (
-                      <div
+                      <label
                         key={area.value}
-                        onClick={() => handleSelectArea(area.value)}
                         className={cn(
-                          "flex cursor-pointer items-center justify-between rounded-xl border p-3.5 transition-all duration-200",
+                          "flex cursor-pointer items-center justify-between rounded-xl border p-3.5 transition-[background-color,border-color,box-shadow] duration-200",
                           isSelected
                             ? "border-primary/40 bg-primary/4 text-primary"
                             : errors.focusArea
@@ -375,12 +374,21 @@ export default function VolunteerPage() {
                               : "border-border/50 bg-background hover:bg-muted/15"
                         )}
                       >
+                        <input
+                          type="radio"
+                          name="focusArea"
+                          value={area.value}
+                          checked={isSelected}
+                          onChange={() => handleSelectArea(area.value)}
+                          className="peer sr-only"
+                        />
                         <span className="text-xs font-semibold">
                           {area.label}
                         </span>
-                        <div
+                        <span
+                          aria-hidden="true"
                           className={cn(
-                            "flex size-4 items-center justify-center rounded-full border transition-all",
+                            "flex size-4 items-center justify-center rounded-full border transition-[background-color,border-color,box-shadow] peer-focus-visible:ring-3 peer-focus-visible:ring-primary/20 peer-focus-visible:outline-none",
                             isSelected
                               ? "border-primary bg-primary text-primary-foreground"
                               : errors.focusArea
@@ -391,20 +399,24 @@ export default function VolunteerPage() {
                           {isSelected && (
                             <HugeiconsIcon
                               icon={CheckIcon}
+                              aria-hidden="true"
                               className="size-2.5 stroke-3"
                             />
                           )}
-                        </div>
-                      </div>
+                        </span>
+                      </label>
                     )
                   })}
                 </div>
                 {errors.focusArea && (
-                  <span className="text-[11px] font-medium text-destructive">
+                  <span
+                    aria-live="polite"
+                    className="text-[11px] font-medium text-destructive"
+                  >
                     {errors.focusArea}
                   </span>
                 )}
-              </div>
+              </fieldset>
 
               {/* Cover Message */}
               <div className="flex flex-col gap-1.5">

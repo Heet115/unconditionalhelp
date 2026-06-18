@@ -51,12 +51,16 @@ const FAQS = [
 export default function DonatePage() {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
 
-  const handleCopy = (text: string, index: number) => {
-    navigator.clipboard.writeText(text)
-    setCopiedIndex(index)
-    setTimeout(() => {
+  const handleCopy = async (text: string, index: number) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopiedIndex(index)
+      setTimeout(() => {
+        setCopiedIndex(null)
+      }, 2000)
+    } catch {
       setCopiedIndex(null)
-    }, 2000)
+    }
   }
 
   return (
@@ -129,10 +133,12 @@ export default function DonatePage() {
 
             <div className="mt-6 space-y-4">
               {BANK_DETAILS.map((detail, idx) => (
-                <div
+                <button
                   key={detail.label}
+                  type="button"
                   onClick={() => handleCopy(detail.value, idx)}
-                  className="group relative flex cursor-pointer flex-col justify-between gap-2 rounded-2xl border border-border/50 bg-background/50 p-4 transition-all duration-200 hover:border-primary/20 hover:bg-background/80 sm:flex-row sm:items-center"
+                  aria-label={`Copy ${detail.label}: ${detail.value}`}
+                  className="group relative flex w-full cursor-pointer flex-col justify-between gap-2 rounded-2xl border border-border/50 bg-background/50 p-4 text-left transition-[background-color,border-color,box-shadow] duration-200 hover:border-primary/20 hover:bg-background/80 focus-visible:border-primary/40 focus-visible:ring-3 focus-visible:ring-primary/20 focus-visible:outline-none sm:flex-row sm:items-center"
                 >
                   <div>
                     <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
@@ -143,15 +149,19 @@ export default function DonatePage() {
                     </p>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-xs font-medium text-primary opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    <span
+                      aria-live="polite"
+                      className="text-xs font-medium text-primary opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+                    >
                       {copiedIndex === idx ? "Copied!" : "Click to Copy"}
                     </span>
                     <HugeiconsIcon
                       icon={ClipboardCheckIcon}
+                      aria-hidden="true"
                       className="size-4 text-muted-foreground transition-colors duration-200 group-hover:text-primary"
                     />
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </motion.div>
