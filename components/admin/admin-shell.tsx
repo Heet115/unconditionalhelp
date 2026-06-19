@@ -8,6 +8,7 @@ import {
   Analytics02Icon,
   Calendar01Icon,
   CharityIcon,
+  CloudUploadIcon,
   FavouriteIcon,
   Home07Icon,
   Image01Icon,
@@ -36,6 +37,7 @@ import {
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/admin", icon: Home07Icon },
+  { label: "Media", href: "/admin/media", icon: CloudUploadIcon },
   { label: "Activities", icon: Analytics02Icon, comingSoon: true },
   { label: "Events", icon: Calendar01Icon, comingSoon: true },
   { label: "Gallery", icon: Image01Icon, comingSoon: true },
@@ -71,9 +73,13 @@ function AdminNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname()
 
   return (
-    <nav className="space-y-1" aria-label="Admin navigation">
+    <nav className="flex flex-col gap-1" aria-label="Admin navigation">
       {NAV_ITEMS.map((item) => {
-        const active = item.href === pathname
+        const active =
+          item.href === pathname ||
+          (item.href !== "/admin" &&
+            item.href !== undefined &&
+            pathname.startsWith(`${item.href}/`))
 
         if (!item.href) {
           return (
@@ -136,7 +142,7 @@ function AdminMobileNav() {
           className="lg:hidden"
           aria-label="Open admin navigation"
         >
-          <HugeiconsIcon icon={Menu03Icon} className="size-4" />
+          <HugeiconsIcon icon={Menu03Icon} />
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-80 border-r border-border/60 p-5">
@@ -197,7 +203,7 @@ export function AdminShell({
                   >
                     <HugeiconsIcon
                       icon={LogoutCircle01Icon}
-                      className="size-4"
+                      data-icon="inline-start"
                     />
                     Sign out
                   </Button>
